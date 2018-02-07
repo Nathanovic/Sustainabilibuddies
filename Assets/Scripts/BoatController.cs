@@ -5,23 +5,23 @@ using UnityEngine;
 public class BoatController : MonoBehaviour {
 
 	private Rigidbody rb;
-	public float movementSpeed;
-	public float rotationSpeed;
 
+	[Header("Move behaviour:")]
+	public float moveSpeedAcceleration;
 	public float maxSpeed = 20f;
 
-	public float moveInput;
+	[Range(0f,1f)]
+	public float changeDirectionCompromiser = 0.8f;
 
-	public Vector2 maxVelocity = new Vector2(5,10);
+	private float moveInput;
 
-	[Header("Rotation:")]
-	public float rotateAcceleration;
-	public float rotateSpeed;
-
-	public float maxRotationAcceleration;
+	[Header("Rotate behaviour:")]
+	public float rotationAcceleration;
 	public float maxRotationSpeed;
 
 	public float rotationDegenSpeed;
+
+	private float rotateSpeed;
 
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -34,23 +34,27 @@ public class BoatController : MonoBehaviour {
 		float horizontalInput = Input.GetAxis ("Horizontal");
 		moveInput = Mathf.Clamp (Input.GetAxis ("Vertical"), 0f, 1f);
 
-		rotateAcceleration = horizontalInput * Time.deltaTime * rotationSpeed;
-		rotateAcceleration = Mathf.Clamp (rotateAcceleration, -maxRotationAcceleration, maxRotationAcceleration);
+		float rotateAcceleration = horizontalInput * Time.deltaTime * rotationAcceleration;
 		rotateSpeed += rotateAcceleration;
-		float maxRotSpeed = maxRotationSpeed * rb.velocity.magnitude / maxSpeed;
+		float maxRotSpeed = 0.5f * maxRotationSpeed + maxRotationSpeed * (rb.velocity.magnitude / (maxSpeed * 2));
 		rotateSpeed = Mathf.Clamp (rotateSpeed, -maxRotSpeed, maxRotSpeed);
 
-		StabilizeFloat (ref rotateSpeed, maxRotationSpeed, rotationDegenSpeed);
+		if(horizontalInput == 0)
+			StabilizeFloat (ref rotateSpeed, maxRotationSpeed, rotationDegenSpeed);
 	}
 
-	public Vector3 worldForce;
 	void FixedUpdate() {
+		//movement:
+		Vector3 targetVelocity = transform.forward * moveInput * moveSpeedAcceleration;
+		CompromiseVelocity (ref targetVelocity, rb.velocity);
+		if(GameManager.instance.CanSail ())
+			targetVelocity += Sea.instance.seaCurrent;
+		
+		rb.velocity = targetVelocity;
+
+		//rotation:
 		Vector3 rotEuler = transform.rotation.eulerAngles;
 		rotEuler.y += rotateSpeed;
-		rb.AddForce (transform.forward * moveInput * movementSpeed);
-		Vector3 velocity = rb.velocity;
-		velocity = Vector3.ClampMagnitude (velocity, maxSpeed);
-		rb.velocity = velocity;
 		rb.MoveRotation (Quaternion.Euler(rotEuler));
 	}
 
@@ -62,6 +66,14 @@ public class BoatController : MonoBehaviour {
 			value += degeneration * Time.deltaTime;
 			value = Mathf.Clamp (value, -max, 0f);		
 		}
+	}
+
+	void CompromiseVelocity(ref Vector3 newVelocity, Vector3 currentVelocity){
+		float otherFactor = 1f - changeDirectionCompromiser;
+		float newSpeed = newVelocity.magnitude + currentVelocity.magnitude;
+		newSpeed = Mathf.Min (newSpeed, maxSpeed);
+		newVelocity = newVelocity * changeDirectionCompromiser + currentVelocity * otherFactor;//change direction
+		newVelocity = newVelocity.normalized * newSpeed;
 	}
 
 	public void EnterPort(Transform dock){

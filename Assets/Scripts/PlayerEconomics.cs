@@ -17,6 +17,11 @@ public class PlayerEconomics : MonoBehaviour {
 		UpdateTexts ();
 	}
 
+	public void AddFish(int count){
+		fishCount += count;
+		UpdateTexts ();
+	}
+
 	public void SellFish(int fish, int cost){
 		fishCount -= fish;
 		cashCount += cost;
