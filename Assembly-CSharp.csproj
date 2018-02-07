@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{B650E346-8F15-03D4-A7A8-F32A5B9730AF}</ProjectGuid>
+    <ProjectGuid>{7CD6B2E3-E2F6-01C8-3F00-FB011EB8FD1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -51,10 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BoatController.cs" />
-     <Compile Include="Assets\CountManager.cs" />
-     <Compile Include="Assets\Fisher.cs" />
-     <Compile Include="Assets\PlayerEconomics.cs" />
+     <Compile Include="Assets\Scripts\BoatController.cs" />
+     <Compile Include="Assets\Scripts\City.cs" />
+     <Compile Include="Assets\Scripts\Helper\Counter.cs" />
+     <Compile Include="Assets\Scripts\Helper\ExtensionMethods.cs" />
+     <Compile Include="Assets\Scripts\PlayerEconomics.cs" />
+     <Compile Include="Assets\Scripts\PlayerInteractions.cs" />
+     <Compile Include="Assets\Scripts\Singletons\CountManager.cs" />
+     <Compile Include="Assets\Scripts\Singletons\GameManager.cs" />
+     <Compile Include="Assets\Scripts\UI\TradePanel.cs" />
  <Reference Include="Vuforia.UnityExtensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
  </Reference>

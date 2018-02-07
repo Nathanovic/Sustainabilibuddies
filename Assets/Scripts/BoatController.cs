@@ -28,13 +28,17 @@ public class BoatController : MonoBehaviour {
 	}
 
 	void Update () {
+		if (!GameManager.instance.CanSail ())
+			return;
+
 		float horizontalInput = Input.GetAxis ("Horizontal");
 		moveInput = Mathf.Clamp (Input.GetAxis ("Vertical"), 0f, 1f);
 
 		rotateAcceleration = horizontalInput * Time.deltaTime * rotationSpeed;
 		rotateAcceleration = Mathf.Clamp (rotateAcceleration, -maxRotationAcceleration, maxRotationAcceleration);
 		rotateSpeed += rotateAcceleration;
-		rotateSpeed = Mathf.Clamp (rotateSpeed, -maxRotationSpeed, maxRotationSpeed);
+		float maxRotSpeed = maxRotationSpeed * rb.velocity.magnitude / maxSpeed;
+		rotateSpeed = Mathf.Clamp (rotateSpeed, -maxRotSpeed, maxRotSpeed);
 
 		StabilizeFloat (ref rotateSpeed, maxRotationSpeed, rotationDegenSpeed);
 	}
@@ -58,5 +62,14 @@ public class BoatController : MonoBehaviour {
 			value += degeneration * Time.deltaTime;
 			value = Mathf.Clamp (value, -max, 0f);		
 		}
+	}
+
+	public void EnterPort(Transform dock){
+		transform.position = dock.position;
+		rb.velocity = Vector3.zero;
+	}
+
+	public void LeavePort(Transform dock){
+		transform.rotation = dock.rotation;
 	}
 }
