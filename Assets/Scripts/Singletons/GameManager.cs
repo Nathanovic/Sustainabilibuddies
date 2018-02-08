@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour {
 		return false;
 	}
 
-	public void GameFeedback(string feedback){
+	public void GameFeedback(string feedback, bool showAsWarning = false){
 		feedbackText.text = feedback;
+		feedbackText.color = showAsWarning ? Color.red : Color.black;
 	}
 }
 

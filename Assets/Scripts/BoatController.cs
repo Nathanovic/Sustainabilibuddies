@@ -7,6 +7,8 @@ public class BoatController : MonoBehaviour {
 	private Rigidbody rb;
 
 	[Header("Move behaviour:")]
+	[Range(0f,1f)]
+	public float netOutSpeedFactor = 0.7f;
 	public float moveSpeedAcceleration;
 	public float maxSpeed = 20f;
 
@@ -14,6 +16,7 @@ public class BoatController : MonoBehaviour {
 	public float changeDirectionCompromiser = 0.8f;
 
 	private float moveInput;
+	private float currentSpeedFactor = 1f;
 
 	[Header("Rotate behaviour:")]
 	public float rotationAcceleration;
@@ -45,17 +48,25 @@ public class BoatController : MonoBehaviour {
 
 	void FixedUpdate() {
 		//movement:
-		Vector3 targetVelocity = transform.forward * moveInput * moveSpeedAcceleration;
+		Vector3 targetVelocity = transform.forward * moveInput * moveSpeedAcceleration * currentSpeedFactor;
 		CompromiseVelocity (ref targetVelocity, rb.velocity);
 		if(GameManager.instance.CanSail ())
 			targetVelocity += Sea.instance.seaCurrent;
-		
+
 		rb.velocity = targetVelocity;
 
 		//rotation:
+
+
 		Vector3 rotEuler = transform.rotation.eulerAngles;
 		rotEuler.y += rotateSpeed;
-		rb.MoveRotation (Quaternion.Euler(rotEuler));
+
+		Vector3 rotTargetVelocity = targetVelocity;
+		//if(Vector3.Dot(
+		Quaternion velocityRot = Quaternion.LookRotation (targetVelocity);
+		Quaternion updatedRot = Quaternion.Euler (rotEuler);
+		updatedRot = Quaternion.Slerp (updatedRot, velocityRot, 0.01f);
+		rb.MoveRotation (updatedRot);
 	}
 
 	void StabilizeFloat(ref float value, float max, float degeneration){
@@ -83,5 +94,13 @@ public class BoatController : MonoBehaviour {
 
 	public void LeavePort(Transform dock){
 		transform.rotation = dock.rotation;
+	}
+
+	public void NetDown(){
+		currentSpeedFactor = netOutSpeedFactor;
+	}
+
+	public void NetUp(){
+		currentSpeedFactor = 1f;
 	}
 }
