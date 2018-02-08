@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/Nathan/FishPrototype.unity
-  isLoaded: 1
-  isActive: 1
