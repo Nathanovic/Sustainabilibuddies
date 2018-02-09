@@ -3,38 +3,33 @@ using UnityEngine.UI;
 
 public class TradePanel : MonoBehaviour {
 
-	private PlayerEconomics playerEcoScript;
 	private CanvasGroup cvg;
 	public Text fishFeedbackText;
 
-	private City currentCity;
-	private int fishCost;
+	[SerializeField]private City dock;
+
+	public BoatController boatScript;
+	public PlayerEconomics ecoScript;
 
 	void Start(){
-		playerEcoScript = FindObjectOfType<PlayerEconomics> ();
 		cvg = GetComponent<CanvasGroup> ();
 		cvg.Deactivate ();
 	}
 
-	public void Activate(int _fishCost, City _currentCity){
-		fishCost = _fishCost;
-		currentCity = _currentCity;
-		fishFeedbackText.text = "Heyy, makkerrrr, we geven jou " + fishCost.ToString () + " voor een vissie";
+	public void Activate(City _currentCity){
+		dock = _currentCity;
 
 		cvg.Activate ();
 	}
 
-	public void SellFish(){//Button Event
-		if (playerEcoScript.fishCount > 0) {
-			playerEcoScript.SellFish (1, fishCost);
-		}
+	public void UpgradeNet(){//Button Event
+		dock.TryUpgradeNet(ecoScript);
 	}
-
+	public void UpgradeSpeed(){//Button Event
+		dock.TryUpgradeSpeed(ecoScript);
+	}
 	public void LeavePort(){//Button Event
-		currentCity.LeavePort ();
-	}
-
-	public void Deactivate(){
+		dock.LeavePort (boatScript);
 		cvg.Deactivate ();
 	}
 }

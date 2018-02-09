@@ -6,9 +6,14 @@ public class PlayerEconomics : MonoBehaviour {
 	public int fishCount;
 	public int cashCount;
 	public Text fishText;
-	public Text cashText;
+
+	private FishingNet fishingScript;
+	private BoatController boatScript;
 
 	void Start(){
+		fishingScript = GetComponentInChildren<FishingNet> ();
+		boatScript = GetComponent<BoatController> ();
+
 		UpdateTexts ();
 	}
 
@@ -22,14 +27,22 @@ public class PlayerEconomics : MonoBehaviour {
 		UpdateTexts ();
 	}
 
-	public void SellFish(int fish, int cost){
+	public void UpgradeNet(int fish, int extraNetSize){
+		UseFishForUpgrade (fish);
+		fishingScript.UpgradeNetSize (extraNetSize);
+	}
+
+	public void UpgradeSpeed(int fish, float extraSpeed){
+		UseFishForUpgrade (fish);
+		boatScript.UpgradeSpeed (extraSpeed);
+	}
+
+	void UseFishForUpgrade(int fish){
 		fishCount -= fish;
-		cashCount += cost;
 		UpdateTexts ();
 	}
 
 	void UpdateTexts(){
-		fishText.text = "Fishes: " + fishCount.ToString ();		
-		cashText.text = "Cash: " + cashCount.ToString ();
+		fishText.text = "Fishes: " + fishCount.ToString ();	
 	}
 }

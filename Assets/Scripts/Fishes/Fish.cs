@@ -27,11 +27,8 @@ public class Fish : MonoBehaviour {
 		transform.position = position;
 
 		if (combineVec == Vector3.zero && velocity != Vector3.zero) {
-			float currentMagnitude = velocity.magnitude;
-			currentMagnitude -= conf.deceleration * Time.deltaTime;
-			if (currentMagnitude < 0.1f)
-				currentMagnitude = 0f;
-			velocity = velocity.normalized * currentMagnitude;
+			acceleration = Vector3.zero;
+			velocity = Vector3.MoveTowards (velocity, Vector3.zero, conf.deceleration * Time.deltaTime);
 		}
 	}
 
@@ -47,7 +44,7 @@ public class Fish : MonoBehaviour {
 			avoidVec += avoidDir.normalized / avoidDir.magnitude;
 		}
 
-		return avoidVec;
+		return avoidVec.normalized;
 	}
 
 	Vector3 Combine(){

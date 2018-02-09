@@ -5,23 +5,36 @@ using UnityEngine;
 public class City : MonoBehaviour {
 
 	private Transform boatOrigin;
-	public TradePanel tradePanel;
-	public int fishCost;
-	public BoatController boat;
+
+	[SerializeField]private int upgradeNetCost = 7;
+	[SerializeField]private int upgradeNetSize = 1;
+	[SerializeField]private int upgradeSpeedCost = 4;
+	[SerializeField]private float upgradeSpeedAmount = 1f;
 
 	void Start () {
 		boatOrigin = transform.GetChild (0);		
 	}
 
-	public void EnterPort(){
-		tradePanel.Activate (fishCost, this);
-		boat.EnterPort (boatOrigin);
-		GameManager.instance.playerActivity = PlayerActivity.atDock;
+	public void EnterPort(TradePanel tradePanel, BoatController boatScript){
+		boatScript.EnterPort (boatOrigin);
+		tradePanel.Activate (this);
+		//GameManager.instance.playerActivity = PlayerActivity.atDock;//wont work with two players!
 	}
 
-	public void LeavePort(){
-		tradePanel.Deactivate ();
-		boat.LeavePort (boatOrigin);
+	public void LeavePort(BoatController boatScript){
+		boatScript.LeavePort (boatOrigin);
 		GameManager.instance.playerActivity = PlayerActivity.sailing;
+	}
+
+	public void TryUpgradeNet(PlayerEconomics ecoScript){
+		if (ecoScript.fishCount >= upgradeNetCost) {
+			ecoScript.UpgradeNet (upgradeNetCost, upgradeNetSize);
+		}
+	}
+
+	public void TryUpgradeSpeed(PlayerEconomics ecoScript){
+		if (ecoScript.fishCount >= upgradeSpeedCost) {
+			ecoScript.UpgradeSpeed (upgradeSpeedCost, upgradeSpeedAmount);
+		}
 	}
 }
