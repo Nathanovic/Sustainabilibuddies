@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,20 +10,40 @@ public class GameManager : MonoBehaviour {
 	public Text feedbackText;
 
 	public Text endingText;
+	public string endWarning = "Half a minute left! Speed it up!";
 	[Header("Total game time is these together:")]
 	public int mainGameDurationInSecs = 5;
 	public float fadeTextInDuration = 4.5f;
 	public int gameEndingInSecs = 60;
 	private Counter endGameCounter;
 
+	public CanvasGroup startCVG;
+
 	void Awake(){
 		instance = this;
 	}
 
-	void Start(){
+	IEnumerator Start(){
 		endGameCounter = new Counter ();
 		endGameCounter.onCount += ShowEndGameText;
 		endGameCounter.StartCounter (mainGameDurationInSecs);
+		endingText.text = endWarning;
+
+		startCVG.Activate ();
+		yield return null;
+		Time.timeScale = 0f;
+
+		SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
+		SceneManager.sceneLoaded += OnEnvSceneLoaded;
+	}
+
+	void OnEnvSceneLoaded(Scene newScene, LoadSceneMode loadMode){
+		SceneManager.SetActiveScene (newScene);		
+	}
+
+	public void StartGame(){
+		Time.timeScale = 1f;
+		startCVG.Deactivate ();
 	}
 
 	public bool CanSail(){
@@ -60,6 +81,7 @@ public class GameManager : MonoBehaviour {
 			t -= Time.deltaTime;
 		}
 
+		endingText.text = "Lol, you lost!";
 	}
 }
 

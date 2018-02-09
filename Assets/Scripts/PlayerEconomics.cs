@@ -10,6 +10,9 @@ public class PlayerEconomics : MonoBehaviour {
 	private FishingNet fishingScript;
 	private BoatController boatScript;
 
+	private int myScore;
+	public Text scoreText;
+
 	void Start(){
 		fishingScript = GetComponentInChildren<FishingNet> ();
 		boatScript = GetComponent<BoatController> ();
@@ -24,6 +27,7 @@ public class PlayerEconomics : MonoBehaviour {
 
 	public void AddFish(int count){
 		fishCount += count;
+		myScore += count;
 		UpdateTexts ();
 	}
 
@@ -44,5 +48,6 @@ public class PlayerEconomics : MonoBehaviour {
 
 	void UpdateTexts(){
 		fishText.text = "Fishes: " + fishCount.ToString ();	
+		scoreText.text = "Score: " + myScore.ToString ();
 	}
 }
