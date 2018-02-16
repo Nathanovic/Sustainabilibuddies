@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoatController : MonoBehaviour {
 
-	private PlayerInput inputScript;
+	[SerializeField]private VirtualJoystick joystickScript;
 	private Rigidbody rb;
 	private Transform boatMesh;
 
@@ -28,15 +28,13 @@ public class BoatController : MonoBehaviour {
 	private float rotateSpeed;
 
 	void Start () {
-		inputScript = GetComponent<PlayerInput> ();
 		rb = GetComponent<Rigidbody> ();
 		boatMesh = transform.GetChild (0);
 	}
 
 	void FixedUpdate() {
 		//get input:
-		float moveInput = inputScript.moveInput;
-		float horizontalInput = inputScript.horizontalInput;
+		float horizontalInput = joystickScript.movementVector.x;
 		if (inPort) {
 			rb.velocity = Vector3.zero;
 			rb.angularVelocity = Vector3.zero;
@@ -44,7 +42,7 @@ public class BoatController : MonoBehaviour {
 		}
 
 		//movement:
-		float forwardSpeed = moveInput * moveSpeedAcceleration * currentSpeedFactor;
+		float forwardSpeed = joystickScript.movementVector.z * moveSpeedAcceleration * currentSpeedFactor;
 		Vector3 targetVelocity = transform.forward * forwardSpeed;
 		CompromiseVelocity (ref targetVelocity, rb.velocity);
 		if(GameManager.instance.CanSail ())

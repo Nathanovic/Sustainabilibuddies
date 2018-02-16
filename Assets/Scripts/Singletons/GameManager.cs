@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,12 @@ public class GameManager : MonoBehaviour {
 
 	public CanvasGroup startCVG;
 
+	[Header("Set to true in builds:")]
+	public bool loadEnvironmentScene;
+
+	private bool gameIsRunning;
+	private List<IRanByGameManager> gameLoopDependables = new List<IRanByGameManager> ();
+
 	void Awake(){
 		instance = this;
 	}
@@ -33,17 +40,33 @@ public class GameManager : MonoBehaviour {
 		yield return null;
 		Time.timeScale = 0f;
 
-		SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
-		SceneManager.sceneLoaded += OnEnvSceneLoaded;
+		if (loadEnvironmentScene) {
+			SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
+			SceneManager.sceneLoaded += OnEnvSceneLoaded;
+		}
 	}
 
 	void OnEnvSceneLoaded(Scene newScene, LoadSceneMode loadMode){
 		SceneManager.SetActiveScene (newScene);		
 	}
 
+	public void InitGameLoopDependable(IRanByGameManager behaviour){
+		gameLoopDependables.Add (behaviour);
+	}
+
 	public void StartGame(){
 		Time.timeScale = 1f;
+		gameIsRunning = true;
 		startCVG.Deactivate ();
+	}
+
+	void Update(){
+		if (!gameIsRunning || gameLoopDependables.Count == 0)
+			return;
+
+		foreach (IRanByGameManager behaviour in gameLoopDependables) {
+			behaviour.ManagedUpdate ();
+		}
 	}
 
 	public bool CanSail(){

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class VirtualJoystick : MonoBehaviour {
+public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 
 	private Camera mainCam;
 	private RectTransform background;
@@ -20,8 +20,10 @@ public class VirtualJoystick : MonoBehaviour {
 	public Transform dirPointerOrigin;
 	public float dirPointerDist = 1f;
 	public Transform directionPointer;
+	public float maxSecondTouchDist = 90f;
 
 	void Start(){
+		GameManager.instance.InitGameLoopDependable (this);
 		background = GetComponent<RectTransform> ();
 		joystick = transform.GetChild (0).GetComponent<RectTransform> ();
 		mainCam = null;
@@ -32,7 +34,7 @@ public class VirtualJoystick : MonoBehaviour {
 		DisableCVG ();
 	}
 
-	void Update(){
+	public void ManagedUpdate(){
 		if (Input.GetMouseButtonDown (0)) {
 			PointerDown ();
 		} else if (Input.GetMouseButton (0)) {
@@ -52,10 +54,10 @@ public class VirtualJoystick : MonoBehaviour {
 			disabledCVG = false;
 		}
 		else {
-			if (!RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, mainCam, out localPoint)) {
-				Debug.Log ("outside of rect");//not working, yet
+			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, mainCam, out localPoint);
+			if(localPoint.magnitude > maxSecondTouchDist){
 				Vector2 normalizedPoint = background.anchoredPosition + localPoint;
-				background.anchoredPosition = normalizedPoint;
+				background.anchoredPosition = normalizedPoint;				
 			}
 		}
 
@@ -89,7 +91,7 @@ public class VirtualJoystick : MonoBehaviour {
 		}
 	}
 
-	public void PointerUp (){
+	void PointerUp (){
 		movementVector = new Vector3 ();
 		joystick.anchoredPosition = inputVector;
 		disableCounter.StartCounter ();
