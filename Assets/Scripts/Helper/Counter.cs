@@ -2,8 +2,8 @@
 
 public class Counter{
 
-	private float countTime;
-	private float startCountTime;
+	protected float countTime;
+	protected float startCountTime;
 	private bool count;
 
 	public event DefaultDelegate onCount;
@@ -11,15 +11,28 @@ public class Counter{
 	public Counter(){
 		CountManager.instance.InitCounter (this);
 	}
+	public Counter(float _countTime){
+		countTime = _countTime;
+		CountManager.instance.InitCounter (this);
+	}
 
 	public void StartCounter(float _countTime){
-		count = true;
-		startCountTime = Time.time; 
 		countTime = _countTime;
+		StartCounter ();
+	}
+	public void StartCounter(){
+		count = true;
+		startCountTime = Time.time; 	
 	}
 
 	public void Update(){
-		if (count && (Time.time - startCountTime) >= countTime) {
+		if (count) {
+			CountDown ();
+		}
+	}
+
+	protected virtual void CountDown(){
+		if ((Time.time - startCountTime) >= countTime) {
 			onCount ();
 			startCountTime = Time.time; 
 		}
