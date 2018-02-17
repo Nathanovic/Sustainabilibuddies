@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 88c7da10f6f79e742847bcc9e06dfcb3
+  - enabled: 0
     path: Assets/Nathan/InputTest.unity
     guid: 6d89f7375915a8c4dac3462252bde10c
-  - enabled: 0
-    path: Assets/Game.unity
-    guid: 88c7da10f6f79e742847bcc9e06dfcb3
   - enabled: 0
     path: Assets/Sieb/Environment.unity
     guid: ab2b78c020207b147bbb29ca17b6f54f

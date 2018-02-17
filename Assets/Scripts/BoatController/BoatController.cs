@@ -52,7 +52,7 @@ public class BoatController : MonoBehaviour {
 		rb.velocity = targetVelocity;
 
 		//rotation setvalue:
-		float rotateAcceleration = horizontalInput * Time.deltaTime * rotationAcceleration;
+		float rotateAcceleration = horizontalInput * Time.fixedDeltaTime * rotationAcceleration;
 		rotateSpeed += rotateAcceleration;
 		float maxRotSpeed = 0.5f * maxRotationSpeed + maxRotationSpeed * (rb.velocity.magnitude / (maxSpeed * 2));
 		rotateSpeed = Mathf.Clamp (rotateSpeed, -maxRotSpeed, maxRotSpeed);

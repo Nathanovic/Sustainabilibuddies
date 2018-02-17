@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-	[SerializeField]private Transform target;
+	private Transform target;
 	[SerializeField]private float rotSpeed = 3f;
-	private Vector3 camOffset;
+	private Vector3 relCamPos;
 
-	void Start () {
-		camOffset = transform.position - target.position;
+	[SerializeField]private float camSlerpSpeed = 0.5f;
+
+	public void StartTracking (Transform _target) {
+		target = _target;
+		relCamPos = target.InverseTransformPoint (transform.position);
 	}
 
-	void Update () {
+	void LateUpdate () {
+		/*
 		transform.position = target.position + camOffset;
+
 		float rotHorizontal = -Input.GetAxis ("CamHorizontal") * Time.deltaTime;
 		rotHorizontal *= rotSpeed;
 
 		transform.RotateAround (target.position, Vector3.up, rotHorizontal);
+
 		transform.LookAt (target.position);
-		camOffset = transform.position - target.position;
+		*/
+
+		Vector3 targetPos = target.TransformPoint (relCamPos);
+		transform.position = Vector3.Slerp (transform.position, targetPos, camSlerpSpeed * Time.deltaTime);
+		transform.LookAt (target.position);
 	}
 }

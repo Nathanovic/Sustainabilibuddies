@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour {
 	public CanvasGroup startCVG;
 
 	[Header("Set to true in builds:")]
-	public bool loadEnvironmentScene;
+	public bool finalBuild;
+	public GameObject noBuildObject;
 
 	private bool gameIsRunning;
 	private List<IRanByGameManager> gameLoopDependables = new List<IRanByGameManager> ();
@@ -36,13 +37,17 @@ public class GameManager : MonoBehaviour {
 		endGameCounter.StartCounter (mainGameDurationInSecs);
 		endingText.text = endWarning;
 
-		startCVG.Activate ();
-		yield return null;
-		Time.timeScale = 0f;
+		if (finalBuild) {
+			startCVG.Activate ();
+			yield return null;
 
-		if (loadEnvironmentScene) {
+			Time.timeScale = 0f;
+			noBuildObject.SetActive (false);
 			SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
 			SceneManager.sceneLoaded += OnEnvSceneLoaded;
+		}
+		else {
+			gameIsRunning = true;
 		}
 	}
 
