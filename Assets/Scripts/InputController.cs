@@ -9,8 +9,6 @@ public class InputController : MonoBehaviour {
 	private ShipController ship;
 	[SerializeField]private VirtualJoystick joystickScript;
 
-	public UnityEngine.UI.Text gyroText;
-
 	void Start () {
 		ship = GetComponent<ShipController> ();
 		#if UNITY_ANDROID
@@ -34,8 +32,6 @@ public class InputController : MonoBehaviour {
 			h = Input.gyro.attitude.eulerAngles.z / 90f;
 			v = Input.GetMouseButtonDown (0) ? 1f : 0f;
 		}
-
-		gyroText.text = Input.gyro.attitude.eulerAngles.ToString();
 
 		ship.Move (h, v);//, v, 0f);
 	}

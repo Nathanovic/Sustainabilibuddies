@@ -17,15 +17,12 @@ public class PlayerEconomics : MonoBehaviour {
 		fishingScript = GetComponentInChildren<FishingNet> ();
 		boatScript = GetComponent<BoatController> ();
 
+		fishingScript.onNetUp += AddFish;
+
 		UpdateTexts ();
 	}
 
-	public void AddFish(){
-		fishCount += 1;
-		UpdateTexts ();
-	}
-
-	public void AddFish(int count){
+	private void AddFish(int count){
 		fishCount += count;
 		myScore += count;
 		UpdateTexts ();

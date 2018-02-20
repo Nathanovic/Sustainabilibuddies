@@ -3,6 +3,6 @@
 public class CameraTarget : MonoBehaviour {
 
 	void Start(){
-		Camera.main.GetComponent<CameraController> ().StartTracking (transform);
+		Camera.main.GetComponent<CameraViewController> ().StartTracking (transform);
 	}
 }

@@ -22,6 +22,8 @@ namespace ShipTest{
 
 		[Range(0f,1f)]public float rotSpeedRelation = 0.5f;
 
+		public float rotationSpeedDegenFactor = 0.1f;
+
 		void Start(){
 			rb = GetComponent<Rigidbody> ();
 			visual = transform.GetChild (0);
@@ -49,7 +51,7 @@ namespace ShipTest{
 			visual.transform.localEulerAngles = visualDefaultEuler + new Vector3 (currentSpeed * 0.4f, 0f, 0f);
 
 			//set movement speed:
-			if (vertical != 0) {
+			if (Mathf.Abs(vertical) * maxForwardSpeed <= maxForwardSpeed && vertical != 0f) {
 				float acceleration = vertical * accSpeed;
 				currentSpeed += acceleration;
 				currentSpeed = Mathf.Clamp (currentSpeed, -maxForwardSpeed, maxForwardSpeed);
@@ -57,6 +59,8 @@ namespace ShipTest{
 			else {
 				currentSpeed = ResetValueOverTime (currentSpeed, maxForwardSpeed, speedDegenTime);
 			}
+
+			currentSpeed -= currentRotateSpeed * rotationSpeedDegenFactor;
 
 			//move:
 			rb.velocity = transform.forward * currentSpeed;
