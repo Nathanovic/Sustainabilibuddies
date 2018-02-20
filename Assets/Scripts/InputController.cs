@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 using ShipTest;
 
@@ -11,9 +9,6 @@ public class InputController : MonoBehaviour {
 
 	void Start () {
 		ship = GetComponent<ShipController> ();
-		#if UNITY_ANDROID
-		Input.gyro.enabled = true;
-		#endif
 	}
 
 	void FixedUpdate () {
@@ -27,10 +22,6 @@ public class InputController : MonoBehaviour {
 				v *= 0.5f;
 			}
 			h = inputVector.x;
-		}
-		else {
-			h = Input.gyro.attitude.eulerAngles.z / 90f;
-			v = Input.GetMouseButtonDown (0) ? 1f : 0f;
 		}
 
 		ship.Move (h, v);//, v, 0f);

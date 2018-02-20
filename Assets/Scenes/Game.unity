@@ -1077,11 +1077,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 7abf397f49087314f8332b310b26bdeb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4475065
+      value: 0.3382513
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 7abf397f49087314f8332b310b26bdeb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4475065
+      value: 0.3382513
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 7abf397f49087314f8332b310b26bdeb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1089,7 +1089,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 7abf397f49087314f8332b310b26bdeb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.44750643
+      value: 0.33825123
       objectReference: {fileID: 0}
     - target: {fileID: 2300004, guid: 7abf397f49087314f8332b310b26bdeb, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1460,11 +1460,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 21.01
+      value: 17.88
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -19.66
+      value: -16.47
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1766,7 +1766,7 @@ Transform:
   m_GameObject: {fileID: 643151827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.42, z: -0.03}
-  m_LocalScale: {x: 0.44750643, y: 0.4475065, z: 0.4475065}
+  m_LocalScale: {x: 0.33825123, y: 0.3382513, z: 0.3382513}
   m_Children: []
   m_Father: {fileID: 1076108844}
   m_RootOrder: 1
@@ -2633,7 +2633,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1076108843}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 1.5195312, z: -0.04}
+  m_LocalPosition: {x: -0.05, y: 1.72, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 308533124}
@@ -2681,7 +2681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6e0849014c5084db4f030498c8b2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForwardSpeed: 12.5
+  maxForwardSpeed: 9
   backwardsSpeedFactor: 0.35
   accSpeed: 0.23
   speedDegenTime: 4

@@ -543,7 +543,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1407332652
+  randomSeed: 134801911
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7042,9 +7042,10 @@ Prefab:
       objectReference: {fileID: 2100000, guid: a3c22b0022c78d14892e036c8f53152f, type: 2}
     - target: {fileID: 100000, guid: 0f1b676fcd41c89498056a1fb5b8c1b7, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 0f1b676fcd41c89498056a1fb5b8c1b7, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 0f1b676fcd41c89498056a1fb5b8c1b7, type: 3}
   m_IsPrefabParent: 0
 --- !u!4 &1425783871 stripped
@@ -7408,6 +7409,24 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64e0f35d2e89ada4e8dba789d4e2fcb6, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1562908343 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 0f1b676fcd41c89498056a1fb5b8c1b7, type: 3}
+  m_PrefabInternal: {fileID: 1403819117}
+--- !u!64 &1562908344
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1562908343}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 0f1b676fcd41c89498056a1fb5b8c1b7, type: 3}
 --- !u!4 &1567335549 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 64e0f35d2e89ada4e8dba789d4e2fcb6, type: 3}
@@ -7615,6 +7634,7 @@ Transform:
   - {fileID: 688507299}
   - {fileID: 878711293}
   - {fileID: 1386018755}
+  - {fileID: 505155463}
   - {fileID: 502633096}
   - {fileID: 606871627}
   - {fileID: 1571625525}
@@ -7622,12 +7642,11 @@ Transform:
   - {fileID: 1020306975}
   - {fileID: 1597294995}
   - {fileID: 442444554}
+  - {fileID: 699594196}
   - {fileID: 1246428963}
   - {fileID: 886355458}
   - {fileID: 175556338}
   - {fileID: 830735899}
-  - {fileID: 505155463}
-  - {fileID: 699594196}
   - {fileID: 649314117}
   m_Father: {fileID: 0}
   m_RootOrder: 8
