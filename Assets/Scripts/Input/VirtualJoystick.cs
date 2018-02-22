@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 
 public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 
-	private Camera mainCam;
+	private static VirtualJoystick _instance;
+
 	private RectTransform background;
 	private RectTransform joystick;
 	private CanvasGroup cvg;
@@ -17,50 +18,74 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	[HideInInspector]public Vector3 movementVector;
 
 	public Transform camTransform;
-	public Transform dirPointerOrigin;
-	public float dirPointerDist = 1f;
-	public Transform directionPointer;
+	public DirectionPointer directionPointer;
 	public float maxSecondTouchDist = 90f;
+
+	private InputHandler inputHandler;
+
+	void Awake(){
+		_instance = this;
+	}
 
 	void Start(){
 		GameManager.instance.InitGameLoopDependable (this);
 		background = GetComponent<RectTransform> ();
 		joystick = transform.GetChild (0).GetComponent<RectTransform> ();
-		mainCam = null;
 
 		cvg = GetComponent<CanvasGroup> ();
 		disableCounter = new CanvasCounter (cvg, cvgDisableTime, fadeOutTime);
 		disableCounter.onCount += DisableCVG;
 		DisableCVG ();
+
+		if (inputHandler == null)
+			SetUpInputHandler ();
+	}
+
+	void SetUpInputHandler(){
+		#if UNITY_ANDROID
+		inputHandler = new TouchInputHandler();
+		#else
+		inputHandler = new MouseInputHandler();
+		#endif
+	}
+
+	public static void AddNotClickable(RectTransform noInputEle){
+		if (_instance.inputHandler == null)
+			_instance.SetUpInputHandler ();
+
+		_instance.inputHandler.AddNoInputElement (noInputEle);
 	}
 
 	public void ManagedUpdate(){
-		if (Input.GetMouseButtonDown (0)) {
-			PointerDown ();
-		} else if (Input.GetMouseButton (0)) {
-			DragPointer ();
-		} else if (Input.GetMouseButtonUp (0)) {
-			PointerUp ();
-		}
+		if (!inputHandler.isDragging) {
+			if(inputHandler.PointerDown())
+				PointerDown ();
+		} else if (inputHandler.isDragging) {
+			if (!inputHandler.PointerUp ())
+				DragPointer ();
+			else
+				PointerUp ();
+		} 
 	}
 
 	void PointerDown(){
 		Vector2 localPoint = new Vector2 ();
 		if (disabledCVG) {
-			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, mainCam, out localPoint);
+			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
 			Vector2 normalizedPoint = background.anchoredPosition + localPoint;
 			background.anchoredPosition = normalizedPoint;
 
 			disabledCVG = false;
 		}
 		else {
-			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, mainCam, out localPoint);
+			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
 			if(localPoint.magnitude > maxSecondTouchDist){
 				Vector2 normalizedPoint = background.anchoredPosition + localPoint;
 				background.anchoredPosition = normalizedPoint;				
 			}
 		}
 
+		directionPointer.Enable ();
 		cvg.Activate ();
 		disableCounter.StopCounter ();
 		DragPointer ();
@@ -69,7 +94,7 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	void DragPointer (){
 		Vector2 pos = new Vector2 ();
 		if(RectTransformUtility.ScreenPointToLocalPointInRectangle(background,
-			Input.mousePosition, mainCam, out pos))
+			Input.mousePosition, null, out pos))
 		{
 			pos.x = pos.x / background.sizeDelta.x;
 			pos.y = pos.y / background.sizeDelta.y;
@@ -81,17 +106,12 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 
 			movementVector = inputVector;
 			movementVector = camTransform.TransformDirection (movementVector);
-			movementVector.Normalize ();
-			Debug.DrawRay (dirPointerOrigin.position, movementVector, Color.blue);
-
-			if (movementVector.sqrMagnitude != 0f) {
-				directionPointer.rotation = Quaternion.LookRotation (movementVector);
-			}
-			directionPointer.position = dirPointerOrigin.position + movementVector * dirPointerDist;
+			directionPointer.Rotate (movementVector);
 		}
 	}
 
 	void PointerUp (){
+		directionPointer.Disable ();
 		movementVector = new Vector3 ();
 		joystick.anchoredPosition = inputVector;
 		disableCounter.StartCounter ();
