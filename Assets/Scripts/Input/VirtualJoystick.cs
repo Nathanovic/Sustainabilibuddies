@@ -56,7 +56,6 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	}
 
 	public void ManagedUpdate(){
-		Debug.Log (inputHandler.GetType ().ToString () + " drags: " + inputHandler.isDragging);
 		if (!inputHandler.isDragging) {
 			if(inputHandler.PointerDown())
 				PointerDown ();
