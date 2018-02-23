@@ -42,11 +42,10 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	}
 
 	void SetUpInputHandler(){
-		#if UNITY_ANDROID
-		inputHandler = new TouchInputHandler();
-		#else
-		inputHandler = new MouseInputHandler();
-		#endif
+		if (Application.platform == RuntimePlatform.Android)
+			inputHandler = new TouchInputHandler ();
+		else
+			inputHandler = new MouseInputHandler();
 	}
 
 	public static void AddNotClickable(RectTransform noInputEle){
@@ -57,6 +56,7 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	}
 
 	public void ManagedUpdate(){
+		Debug.Log (inputHandler.GetType ().ToString () + " drags: " + inputHandler.isDragging);
 		if (!inputHandler.isDragging) {
 			if(inputHandler.PointerDown())
 				PointerDown ();
