@@ -83,4 +83,11 @@ public class FishPool : MonoBehaviour {
 
 		return neighbors;
 	}
+
+	public void FishCaught(Fish fish){
+		myFishes.Remove (fish);
+	}
+	public void FishEscaped(Fish fish){
+		myFishes.Add (fish);
+	}
 }

@@ -59,4 +59,21 @@ public class Fish : MonoBehaviour {
 	float RandomVal(float r){
 		return Random.Range(-r, r);
 	}
+
+	public void CaughtInNet(){
+		Renderer[] visuals = GetComponentsInChildren<Renderer> ();
+		for (int i = 0; i < visuals.Length; i++) {
+			visuals [i].enabled = false;
+		}
+
+		myPool.FishCaught (this);
+	}
+	public void EscapeFromNet(){
+		Renderer[] visuals = GetComponentsInChildren<Renderer> ();
+		for (int i = 0; i < visuals.Length; i++) {
+			visuals [i].enabled = true;
+		}		
+
+		myPool.FishEscaped (this);
+	}
 }

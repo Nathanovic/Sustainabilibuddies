@@ -42,11 +42,10 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 	}
 
 	void SetUpInputHandler(){
-		#if UNITY_ANDROID
-		inputHandler = new TouchInputHandler();
-		#else
-		inputHandler = new MouseInputHandler();
-		#endif
+		if (Application.platform == RuntimePlatform.Android)
+			inputHandler = new TouchInputHandler ();
+		else
+			inputHandler = new MouseInputHandler();
 	}
 
 	public static void AddNotClickable(RectTransform noInputEle){
