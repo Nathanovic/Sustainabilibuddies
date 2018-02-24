@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25081375, g: 0.31299073, b: 0.36808783, a: 1}
+  m_IndirectSpecularColor: {r: 0.25081444, g: 0.31299132, b: 0.3680889, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 13091393}
   - component: {fileID: 13091392}
-  m_Layer: 8
+  m_Layer: 4
   m_Name: WaterlightLayer (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +683,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 134801911
+  randomSeed: 823039223
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -1134,7 +1134,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 36.02, y: 43, z: 1}
+    m_Scale: {x: 101.78, y: 96.9, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -1243,7 +1243,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 20.9
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3991,7 +3991,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260861918}
   m_LocalRotation: {x: -0.48334563, y: -0.5161172, z: -0.5161172, w: 0.48334563}
-  m_LocalPosition: {x: -0.5, y: -3.5906715, z: 0.4}
+  m_LocalPosition: {x: 11.1, y: -0.7, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6592,7 +6592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972066972}
   - component: {fileID: 972066971}
-  m_Layer: 8
+  m_Layer: 4
   m_Name: WaterlightLayer (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7205,6 +7205,87 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07644022ecf19e047b3da0ff1a43315d, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1138722834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1138722835}
+  - component: {fileID: 1138722838}
+  - component: {fileID: 1138722837}
+  - component: {fileID: 1138722836}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1138722835
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138722834}
+  m_LocalRotation: {x: 0.21043845, y: -0, z: -0, w: 0.97760713}
+  m_LocalPosition: {x: 0, y: 37.9, z: -52.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1786073917}
+  m_RootOrder: 65
+  m_LocalEulerAnglesHint: {x: 24.296001, y: 0, z: 0}
+--- !u!81 &1138722836
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138722834}
+  m_Enabled: 1
+--- !u!124 &1138722837
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138722834}
+  m_Enabled: 1
+--- !u!20 &1138722838
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138722834}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!4 &1164184828 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 07644022ecf19e047b3da0ff1a43315d, type: 3}
@@ -7564,7 +7645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1291294160}
   - component: {fileID: 1291294159}
-  m_Layer: 8
+  m_Layer: 4
   m_Name: WaterlightLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8027,7 +8108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1434686439}
   - component: {fileID: 1434686438}
-  m_Layer: 8
+  m_Layer: 4
   m_Name: WaterlightLayer (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8769,6 +8850,7 @@ Transform:
   - {fileID: 117289750}
   - {fileID: 1279023172}
   - {fileID: 423998293}
+  - {fileID: 1138722835}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8851,7 +8933,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 64e0f35d2e89ada4e8dba789d4e2fcb6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 64e0f35d2e89ada4e8dba789d4e2fcb6, type: 3}
       propertyPath: m_LocalPosition.z

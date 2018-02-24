@@ -190,9 +190,8 @@ Shader "Shader Forge/Water_Color" {
                 float LdotH = saturate(dot(lightDirection, halfDirection));
                 float3 specularColor = _Metallic;
                 float specularMonochrome;
-                float3 node_3817 = (lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb);
                 float node_7949 = 10.0;
-                float3 diffuseColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-node_3817)) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*node_3817) )); // Need this for specular when using metallic
+                float3 diffuseColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb))) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb)) )); // Need this for specular when using metallic
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, specularColor, specularColor, specularMonochrome );
                 specularMonochrome = 1.0-specularMonochrome;
                 float NdotV = abs(dot( normalDirection, viewDirection ));
@@ -232,8 +231,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
-                float node_1549 = saturate((sceneZ-partZ)/_Shallows);
-                fixed4 finalRGBA = fixed4(lerp(sceneColor.rgb, finalColor,node_1549),1);
+                fixed4 finalRGBA = fixed4(lerp(sceneColor.rgb, finalColor,saturate((sceneZ-partZ)/_Shallows)),1);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
                 return finalRGBA;
             }
@@ -358,9 +356,8 @@ Shader "Shader Forge/Water_Color" {
                 float LdotH = saturate(dot(lightDirection, halfDirection));
                 float3 specularColor = _Metallic;
                 float specularMonochrome;
-                float3 node_3817 = (lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb);
                 float node_7949 = 10.0;
-                float3 diffuseColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-node_3817)) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*node_3817) )); // Need this for specular when using metallic
+                float3 diffuseColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb))) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb)) )); // Need this for specular when using metallic
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, specularColor, specularColor, specularMonochrome );
                 specularMonochrome = 1.0-specularMonochrome;
                 float NdotV = abs(dot( normalDirection, viewDirection ));
@@ -388,8 +385,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 diffuse = directDiffuse * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
-                float node_1549 = saturate((sceneZ-partZ)/_Shallows);
-                fixed4 finalRGBA = fixed4(finalColor * node_1549,0);
+                fixed4 finalRGBA = fixed4(finalColor * saturate((sceneZ-partZ)/_Shallows),0);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
                 return finalRGBA;
             }
@@ -543,7 +539,6 @@ Shader "Shader Forge/Water_Color" {
                 
                 o.Emission = 0;
                 
-                float3 node_3817 = (lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb);
                 float4 node_689 = _Time;
                 float2 node_4429 = ((i.uv0*2.0)+(0.03*node_689.g)*float2(1,0));
                 float4 _normalmap_var = tex2D(_normalmap,TRANSFORM_TEX(node_4429, _normalmap));
@@ -551,7 +546,7 @@ Shader "Shader Forge/Water_Color" {
                 float2 node_5172 = ((i.uv0*2.0)+(0.03*node_9235.g)*float2(0,1));
                 float4 _normalmap_copy_var = tex2D(_normalmap_copy,TRANSFORM_TEX(node_5172, _normalmap_copy));
                 float node_7949 = 10.0;
-                float3 diffColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-node_3817)) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*node_3817) ));
+                float3 diffColor = saturate(( floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1) > 0.5 ? (1.0-(1.0-2.0*(floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)-0.5))*(1.0-(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb))) : (2.0*floor((_normalmap_var.b*_normalmap_copy_var.b) * node_7949) / (node_7949 - 1)*(lerp(_Depth.rgb,_Color.rgb,((1.0 - (objPos.g-i.posWorld.g))+_depthblend))*i.vertexColor.rgb)) ));
                 float specularMonochrome;
                 float3 specColor;
                 diffColor = DiffuseAndSpecularFromMetallic( diffColor, _Metallic, specColor, specularMonochrome );
