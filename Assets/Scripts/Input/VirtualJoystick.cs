@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
+public class VirtualJoystick : ManagedBehaviour {
 
 	private static VirtualJoystick _instance;
 
@@ -23,12 +23,12 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 
 	private InputHandler inputHandler;
 
-	void Awake(){
+	protected override void Awake(){
+		base.Awake ();
 		_instance = this;
 	}
 
 	void Start(){
-		GameManager.instance.InitGameLoopDependable (this);
 		background = GetComponent<RectTransform> ();
 		joystick = transform.GetChild (0).GetComponent<RectTransform> ();
 
@@ -55,7 +55,7 @@ public class VirtualJoystick : MonoBehaviour, IRanByGameManager {
 		_instance.inputHandler.AddNoInputElement (noInputEle);
 	}
 
-	public void ManagedUpdate(){
+	public override void ManagedUpdate(){
 		if (!inputHandler.isDragging) {
 			if(inputHandler.PointerDown())
 				PointerDown ();

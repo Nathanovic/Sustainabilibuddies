@@ -19,7 +19,11 @@ public class FishPool : MonoBehaviour {
 	public int fishCount;
 	public float poolRadius;
 
-	void Start () {
+	public string fishName = "fish";
+	public int maxFishAmount = 20;
+	public int minFishAmount = 2;
+
+	public void StartSpawning () {
 		config = GetComponent<FishConfig> ();
 
 		myFishes = new List<Fish> (fishCount * 2);
@@ -46,7 +50,10 @@ public class FishPool : MonoBehaviour {
 	}
 
 	void SpawnFishAfterTime(){
-		SpawnFish();
+		int fishCount = myFishes.Count;
+		if(fishCount >= minFishAmount && fishCount < maxFishAmount)
+			SpawnFish();
+		
 		spawnFishCounter.StartCounter (RespawnFishTime());
 	}
 
@@ -89,5 +96,9 @@ public class FishPool : MonoBehaviour {
 	}
 	public void FishEscaped(Fish fish){
 		myFishes.Add (fish);
+	}
+
+	public int RemainingFishCount(){
+		return myFishes.Count;
 	}
 }

@@ -5,17 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-
+	
 	public static GameManager instance;
-	public PlayerActivity playerActivity;
+	public LevelInfoHandler infoHandler;
+	public Transform sea;
 	public Text feedbackText;
+	private int currentLevel = 1;
+	[SerializeField]private int finalLevel = 2;
 
-	public Text endingText;
+	public Text gameText;
 	public string endWarning = "Half a minute left! Speed it up!";
 	[Header("Total game time is these together:")]
 	public int mainGameDurationInSecs = 5;
 	public float fadeTextInDuration = 4.5f;
-	public int gameEndingInSecs = 60;
+	public int showBigTextDuration = 60;
 	private Counter endGameCounter;
 
 	[Header("Canvas components:")]
@@ -27,26 +30,39 @@ public class GameManager : MonoBehaviour {
 	public GameObject noBuildObject;
 
 	private bool gameIsRunning;
-	private List<IRanByGameManager> gameLoopDependables = new List<IRanByGameManager> ();
+	private List<ManagedBehaviour> gameLoopDependables = new List<ManagedBehaviour> ();
 
 	void Awake(){
 		instance = this;
 	}
 
-	IEnumerator Start(){
+	void Start(){
 		endGameCounter = new Counter ();
 		endGameCounter.onCount += ShowEndGameText;
 		endGameCounter.StartCounter (mainGameDurationInSecs);
-		endingText.text = endWarning;
+		gameText.text = endWarning;
 
-		if (finalBuild) {
-			menuPanel.Activate ();
-			yield return null;
+		FishManager currentFishManager = sea.GetChild (currentLevel).GetComponent<FishManager> ();
+		currentFishManager.StartSpawning ();
+		infoHandler.LoadFishPoolsFromFishManager (currentFishManager);
 
-			Time.timeScale = 0f;
-			noBuildObject.SetActive (false);
-			SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
-			SceneManager.sceneLoaded += OnEnvSceneLoaded;
+		if (currentLevel == 1) {
+			gameLoopDependables.Sort ();
+			foreach (ManagedBehaviour gmObj in gameLoopDependables) {
+				Debug.Log (gmObj + " sortValue: " + gmObj.sortValue);
+			}
+
+			if (finalBuild) {
+				menuPanel.Activate ();
+
+				Time.timeScale = 0f;
+				noBuildObject.SetActive (false);
+				SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
+				SceneManager.sceneLoaded += OnEnvSceneLoaded;
+			}
+			else {
+				gameIsRunning = true;
+			}
 		}
 		else {
 			gameIsRunning = true;
@@ -57,7 +73,8 @@ public class GameManager : MonoBehaviour {
 		SceneManager.SetActiveScene (newScene);		
 	}
 
-	public void InitGameLoopDependable(IRanByGameManager behaviour){
+	//called on Awake
+	public void InitGameLoopDependable(ManagedBehaviour behaviour){
 		gameLoopDependables.Add (behaviour);
 	}
 
@@ -75,17 +92,18 @@ public class GameManager : MonoBehaviour {
 		if (!gameIsRunning || gameLoopDependables.Count == 0)
 			return;
 
-		foreach (IRanByGameManager behaviour in gameLoopDependables) {
+		foreach (ManagedBehaviour behaviour in gameLoopDependables) {
 			behaviour.ManagedUpdate ();
 		}
 	}
 
-	public bool CanSail(){
-		if (playerActivity == PlayerActivity.sailing) {
-			return true;
-		}
+	void FixedUpdate(){
+		if (!gameIsRunning || gameLoopDependables.Count == 0)
+			return;
 
-		return false;
+		foreach (ManagedBehaviour behaviour in gameLoopDependables) {
+			behaviour.ManagedFixedUpdate ();
+		}
 	}
 
 	public void GameFeedback(string feedback, bool showAsWarning = false){
@@ -95,28 +113,55 @@ public class GameManager : MonoBehaviour {
 
 	void ShowEndGameText(){
 		endGameCounter.onCount -= ShowEndGameText;
-		endGameCounter.onCount += StartEndGameTimer;
+		endGameCounter.onCount += StartGameTextTimer;
 		endGameCounter.StartCounter (fadeTextInDuration);
 
-		endingText.gameObject.SetActive (true);
+		gameText.enabled = true;
 	}
 
-	void StartEndGameTimer(){
+	void StartGameTextTimer(){
 		endGameCounter.StopCounter ();
-		StartCoroutine (EndGameTimer ());
+		endGameCounter.onCount -= StartGameTextTimer;
+		StartCoroutine (GameTextTimer ());
 	}
 
-	IEnumerator EndGameTimer(){
-		float t = gameEndingInSecs;
+	IEnumerator GameTextTimer(){
+		float t = showBigTextDuration;
 		while (t > 0f) {
 			int timeLeft = Mathf.CeilToInt (t);
-			endingText.text = timeLeft.ToString ();
+			gameText.text = timeLeft.ToString ();
 			yield return null;
 			t -= Time.deltaTime;
 		}
 
-		endingText.enabled = false;
+		gameText.enabled = false;
+		gameIsRunning = false;
 		levelInfoScript.ShowLevelResults ();
+	}
+
+	public void LoadNextLevel(){
+		currentLevel++;
+		gameText.enabled = true;
+
+		if (currentLevel > finalLevel) {
+			gameText.text = "You completed the game!";
+			gameIsRunning = false;
+		}
+		else {
+			gameText.text = "Level " + currentLevel.ToString() + " begins!";
+			endGameCounter.onCount += DisableGameText;
+			endGameCounter.StartCounter (3f);
+			Start ();
+		}
+	}
+
+	void DisableGameText(){
+		endGameCounter.onCount -= DisableGameText;
+		gameText.enabled = false;
+	}
+
+	public void Restart(){
+		SceneManager.LoadScene (0);
 	}
 }
 

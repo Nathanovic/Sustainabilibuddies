@@ -16,7 +16,7 @@ public class DirectionPointer : MonoBehaviour {
 	}
 
 	public void Rotate(Vector3 moveVector){
-		if (moveVector.sqrMagnitude != 0f) {
+		if (moveVector != Vector3.zero) {
 			transform.position = origin.position + moveVector * originOffset;
 			transform.rotation = Quaternion.LookRotation (moveVector);
 		}

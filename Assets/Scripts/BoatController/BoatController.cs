@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoatController : MonoBehaviour {
+public class BoatController : ManagedBehaviour {
 
 	[SerializeField]private VirtualJoystick joystickScript;
 	private Rigidbody rb;
@@ -32,7 +32,7 @@ public class BoatController : MonoBehaviour {
 		boatMesh = transform.GetChild (0);
 	}
 
-	void FixedUpdate() {
+	public override void ManagedFixedUpdate (){
 		//get input:
 		float horizontalInput = joystickScript.movementVector.x;
 		if (inPort) {
@@ -45,8 +45,8 @@ public class BoatController : MonoBehaviour {
 		float forwardSpeed = joystickScript.movementVector.z * moveSpeedAcceleration * currentSpeedFactor;
 		Vector3 targetVelocity = transform.forward * forwardSpeed;
 		CompromiseVelocity (ref targetVelocity, rb.velocity);
-		if(GameManager.instance.CanSail ())
-			targetVelocity += Sea.instance.seaCurrent;
+
+		targetVelocity += Sea.instance.seaCurrent;
 		targetVelocity.y = 0f;
 
 		rb.velocity = targetVelocity;

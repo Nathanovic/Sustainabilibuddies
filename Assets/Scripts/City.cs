@@ -23,7 +23,6 @@ public class City : MonoBehaviour {
 
 	public void LeavePort(BoatController boatScript){
 		boatScript.LeavePort (boatOrigin);
-		GameManager.instance.playerActivity = PlayerActivity.sailing;
 	}
 
 	public void TryUpgradeNet(PlayerEconomics ecoScript){
