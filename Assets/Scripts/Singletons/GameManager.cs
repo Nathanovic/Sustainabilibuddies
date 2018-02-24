@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour {
 	public int gameEndingInSecs = 60;
 	private Counter endGameCounter;
 
-	public CanvasGroup startCVG;
+	[Header("Canvas components:")]
+	public CanvasGroup menuPanel;
+	public LevelInfoHandler levelInfoScript;
 
 	[Header("Set to true in builds:")]
 	public bool finalBuild;
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour {
 		endingText.text = endWarning;
 
 		if (finalBuild) {
-			startCVG.Activate ();
+			menuPanel.Activate ();
 			yield return null;
 
 			Time.timeScale = 0f;
@@ -60,9 +62,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void StartGame(){
+		menuPanel.Deactivate ();
+		levelInfoScript.ShowLevelInfo (StartPlaying);
+	}
+
+	private void StartPlaying(){
 		Time.timeScale = 1f;
-		gameIsRunning = true;
-		startCVG.Deactivate ();
+		gameIsRunning = true;		
 	}
 
 	void Update(){
@@ -109,7 +115,8 @@ public class GameManager : MonoBehaviour {
 			t -= Time.deltaTime;
 		}
 
-		endingText.text = "Lol, you lost!";
+		endingText.enabled = false;
+		levelInfoScript.ShowLevelResults ();
 	}
 }
 
