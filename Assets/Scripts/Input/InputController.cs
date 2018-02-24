@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InputController : MonoBehaviour {
+public class InputController : ManagedBehaviour {
 
 	private ShipController ship;
 	[SerializeField]private VirtualJoystick joystickScript;
@@ -9,7 +9,7 @@ public class InputController : MonoBehaviour {
 		ship = GetComponent<ShipController> ();
 	}
 
-	void FixedUpdate () {
+	public override void ManagedFixedUpdate () {
 		float h = 0, v = 0f;
 
 		if (joystickScript.movementVector.sqrMagnitude > 0f) {
