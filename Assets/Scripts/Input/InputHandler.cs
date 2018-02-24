@@ -63,12 +63,14 @@ public class TouchInputHandler : InputHandler{
 		return false;
 	}
 	public override bool PointerUp (){
-		if (currentTouch.phase == TouchPhase.Ended) {
-			isDragging = false;
-			return true;
+		for(int i = 0; i < Input.touchCount; i ++){
+			if (Input.GetTouch (i).phase != TouchPhase.Ended) {
+				return false;
+			}
 		}
 
-		return false;
+		isDragging = false;
+		return true;
 	}
 	public override Vector2 PointerPos (){
 		return currentTouch.position;

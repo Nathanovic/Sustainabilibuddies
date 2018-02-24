@@ -3301,9 +3301,9 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 762830646}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!4 &789994001 stripped
 Transform:
@@ -6049,7 +6049,7 @@ MonoBehaviour:
   showBigTextDuration: 6
   menuPanel: {fileID: 1104586579}
   levelInfoScript: {fileID: 1667002863}
-  finalBuild: 0
+  finalBuild: 1
   noBuildObject: {fileID: 698784692}
 --- !u!114 &1640487388
 MonoBehaviour:
