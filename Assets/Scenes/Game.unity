@@ -5214,16 +5214,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAcceleration: 1.5
-  maxVelocity: 2.5
-  deceleration: 2
+  maxVelocity: 1.5
+  deceleration: 1
   vof: 100
-  separationRadius: 1.5
-  separationPriority: 1
+  separationRadius: 1.2
+  separationPriority: 4
   cohesionRadius: 10
   cohesionPriority: 7
   alignmentRadius: 5.5
   alignmentPriority: 2
-  seekTargetPriority: 1
+  seekTargetPriority: 1.2
 --- !u!1 &1418492956
 GameObject:
   m_ObjectHideFlags: 0
