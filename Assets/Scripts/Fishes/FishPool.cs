@@ -33,7 +33,7 @@ public class FishPool : MonoBehaviour {
 			return;
 		setupFinished = true;
 
-		config = GetComponent<FishConfig> ();
+		config = transform.root.GetComponent<FishConfig> ();
 		myFishes = new List<Fish> (fishCount * 2);
 		for (int i = 0; i < fishCount; i++) {
 			SpawnFish ();

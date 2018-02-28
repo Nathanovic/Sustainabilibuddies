@@ -4,11 +4,11 @@
 namespace FishFSM{
 	public abstract class State {
 
-		protected FishData myData;
+		protected FishModel myData;
 		protected Fish fish;
 		protected FiniteStateMachine fsm;
 
-		public void Init(FiniteStateMachine _fsm, Fish _fish, FishData data){
+		public void Init(FiniteStateMachine _fsm, Fish _fish, FishModel data){
 			fsm = _fsm;
 			fish = _fish;
 			myData = data;
@@ -26,7 +26,7 @@ namespace FishFSM{
 		}
 
 		public override Vector3 GetCombinedVector (){
-			throw new System.NotImplementedException ();
+			return fish.Alignment() + fish.Cohesion() + fish.Separation() + fish.GoalSteering();
 		}
 
 		public override void Exit (){
