@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
 		if (currentLevel == 1) {
 			gameLoopDependables.Sort ();
 			foreach (ManagedBehaviour behav in gameLoopDependables) {
-				//Debug.Log (behav.name + " sortValue: " + behav.sortValue);
+				Debug.Log (behav.name + " sortValue: " + behav.sortValue);
 			}
 
 			if (finalBuild) {

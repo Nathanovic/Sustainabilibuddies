@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using FishFSM;
 
 public class Fish : MonoBehaviour {
+
+	private FiniteStateMachine fsm;
+
+	private FishData myData;
 
 	private FishPool myPool;
 	private FishConfig conf;

@@ -8,9 +8,9 @@ public class FishPool : MonoBehaviour {
 	private Counter fishInMeCounter;
 	private Counter spawnFishCounter;
 
-	public int boostedFishRespawnWaitTime;//de respawnrate is boosted na deze waittime
+	public int boostedFishRespawnWaitTime;//de respawnrate is boosted na deze waittime ?????
 	public float minRespawnTime = 7f;
-	public float fishRespawnTime = 10f;
+	public float extraRespawnTime = 10f;
 	public float boostedFishRespawnRate = 1.3f;
 	private float currentFishRespawnRate;
 
@@ -23,13 +23,25 @@ public class FishPool : MonoBehaviour {
 	public int maxFishAmount = 20;
 	public int minFishAmount = 2;
 
-	public void StartSpawning () {
-		config = GetComponent<FishConfig> ();
+	void Start(){	
+		TrySetup ();
+	}
 
+	private bool setupFinished;
+	void TrySetup(){
+		if (setupFinished)
+			return;
+		setupFinished = true;
+
+		config = GetComponent<FishConfig> ();
 		myFishes = new List<Fish> (fishCount * 2);
 		for (int i = 0; i < fishCount; i++) {
 			SpawnFish ();
-		}
+		}	
+	}
+
+	public void StartSpawning () {
+		TrySetup ();
 
 		fishInMeCounter = new Counter ();
 		fishInMeCounter.onCount += BoostRespawnRate;
@@ -38,6 +50,7 @@ public class FishPool : MonoBehaviour {
 		spawnFishCounter = new Counter ();
 		spawnFishCounter.onCount += SpawnFishAfterTime;
 		spawnFishCounter.StartCounter (RespawnFishTime());
+		Debug.Log ("spawn fish after " + RespawnFishTime ().ToString ());
 	}
 
 	void SpawnFish(){
@@ -73,7 +86,7 @@ public class FishPool : MonoBehaviour {
 	}
 
 	float RespawnFishTime(){
-		return minRespawnTime + fishRespawnTime / (myFishes.Count * currentFishRespawnRate);
+		return minRespawnTime + extraRespawnTime / myFishes.Count;
 	}
 
 	public List<Fish> GetNeighbors(Fish fish, float radius){
