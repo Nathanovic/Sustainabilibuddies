@@ -7,23 +7,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance;
-	public LevelInfoHandler infoHandler;
+	private ProgressionHandler progressionScript;
 	public Transform sea;
 	public Text feedbackText;
 	private int currentLevel = 1;
 	[SerializeField]private int finalLevel = 2;
 
 	public Text gameText;
-	public string endWarning = "Half a minute left! Speed it up!";
-	[Header("Total game time is these together:")]
-	public int mainGameDurationInSecs = 5;
-	public float fadeTextInDuration = 4.5f;
-	public int showBigTextDuration = 60;
+	[SerializeField]private string endWarning = " seconds left! Speed it up!";
 	private Counter endGameCounter;
 
 	[Header("Canvas components:")]
 	public CanvasGroup menuPanel;
-	public LevelInfoHandler levelInfoScript;
+	public LevelInfoDisplayer levelInfoScript;
 
 	[Header("Set to true in builds:")]
 	public bool finalBuild;
@@ -31,6 +27,11 @@ public class GameManager : MonoBehaviour {
 
 	private bool gameIsRunning;
 	private List<ManagedBehaviour> gameLoopDependables = new List<ManagedBehaviour> ();
+
+	[Header("Total game time is these together:")]
+	public int mainGameDurationInSecs = 5;
+	public float fadeTextInDuration = 4.5f;
+	public int showBigTextDuration = 20;
 
 	void Awake(){
 		instance = this;
@@ -40,11 +41,14 @@ public class GameManager : MonoBehaviour {
 		endGameCounter = new Counter ();
 		endGameCounter.onCount += ShowEndGameText;
 		endGameCounter.StartCounter (mainGameDurationInSecs);
+		endWarning = showBigTextDuration.ToString () + endWarning;
 		gameText.text = endWarning;
 
 		FishManager currentFishManager = sea.GetChild (currentLevel).GetComponent<FishManager> ();
 		currentFishManager.StartSpawning ();
-		infoHandler.LoadFishPoolsFromFishManager (currentFishManager);
+
+		progressionScript = GetComponent<ProgressionHandler> ();
+		progressionScript.AddPermit (currentFishManager);
 
 		if (currentLevel == 1) {
 			gameLoopDependables.Sort ();
@@ -67,6 +71,10 @@ public class GameManager : MonoBehaviour {
 		else {
 			gameIsRunning = true;
 		}
+	}
+
+	void AddPermit(){
+		
 	}
 
 	void OnEnvSceneLoaded(Scene newScene, LoadSceneMode loadMode){
@@ -134,9 +142,9 @@ public class GameManager : MonoBehaviour {
 			t -= Time.deltaTime;
 		}
 
-		gameText.enabled = false;
+		gameText.enabled = false; 
 		gameIsRunning = false;
-		levelInfoScript.ShowLevelResults ();
+		progressionScript.EvaluateProgress ();
 	}
 
 	public void LoadNextLevel(){
@@ -163,9 +171,4 @@ public class GameManager : MonoBehaviour {
 	public void Restart(){
 		SceneManager.LoadScene (0);
 	}
-}
-
-public enum PlayerActivity{
-	sailing,
-	atDock
 }

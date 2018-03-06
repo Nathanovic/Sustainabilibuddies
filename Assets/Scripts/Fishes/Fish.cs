@@ -12,25 +12,36 @@ public class Fish : MonoBehaviour {
 	private FishConfig conf;
 
 	private Vector3 acceleration;
-	public Vector3 position;
+	public Vector3 position{
+		get{
+			return myData.position;
+		}
+		set{ 
+			myData.position = value;
+		}
+	}
 	public Vector3 velocity;
+
+	public float speedFactor;
+
+	private Vector3 wanderTarget;
+
+	public string myStateQQQ;
 
 	public void Init(FishPool pool, FishConfig config){
 		myPool = pool;
 		conf = config;
+		myData = GetComponent<FishModel> ();
+		myData.conf = conf;
+		fsm = new FiniteStateMachine (this, myData);
+
 		position = transform.position;
 		velocity = new Vector3(RandomVal(0.1f), RandomVal(0.05f), RandomVal(0.1f));
-
-		myData = GetComponent<FishModel> ();
-		myData.onCaught += CaughtInNet;
-		myData.onEscaped += EscapeFromNet;
-
-		State[] myStates = new State[1];
-		myStates [0] = new DefaultState ();
-		fsm = new FiniteStateMachine (myStates, this, myData);
 	}
 
 	void Update(){
+		fsm.RunState ();
+
 		Vector3 combineVec = fsm.currentState.GetCombinedVector ();
 		acceleration += combineVec;
 		acceleration = Vector3.ClampMagnitude (acceleration, conf.maxAcceleration);
@@ -45,6 +56,16 @@ public class Fish : MonoBehaviour {
 		}else{
 			transform.LookAt(transform.position + velocity);
 		}
+
+		myStateQQQ = fsm.currentState.ToString ();
+	}
+
+	public Vector3 Wander(){
+		Vector3 wanderAccel = new Vector3 (RandomBinomial (), RandomBinomial (), RandomBinomial ());
+		wanderTarget += wanderAccel * conf.wanderAcceleration * Time.deltaTime;
+		wanderTarget = Vector3.ClampMagnitude (wanderTarget, conf.wanderDistance);
+
+		return wanderTarget * conf.wanderPriority;
 	}
 
 	public Vector3 Separation(){
@@ -101,11 +122,22 @@ public class Fish : MonoBehaviour {
 		return vec.normalized * conf.seekTargetPriority;
 	}
 
+	public Vector3 BoundsLimitation(){
+		Vector3 vec = new Vector3 ();
+
+		RaycastHit hit;
+		if (Physics.Raycast (position, velocity, out hit, conf.checkBoundsRadius, conf.boundsLM)) {
+			vec += hit.normal;
+		}
+
+		return vec.normalized * conf.boundsPriority;
+	}
+
 	float RandomVal(float r){
 		return Random.Range(-r, r);
 	}
 
-	void CaughtInNet(){
+	public void CaughtInNet(){
 		Renderer[] visuals = GetComponentsInChildren<Renderer> ();
 		for (int i = 0; i < visuals.Length; i++) {
 			visuals [i].enabled = false;
@@ -113,7 +145,12 @@ public class Fish : MonoBehaviour {
 
 		myPool.FishCaught (this);
 	}
-	void EscapeFromNet(){
+
+	public void EscapeFromNet(){
+		Vector3 newPos = myData.net.position + Random.insideUnitSphere;
+		newPos.y = Random.Range (-conf.checkBoundsRadius * 2, -conf.checkBoundsRadius);
+		transform.position = position = newPos;
+
 		Renderer[] visuals = GetComponentsInChildren<Renderer> ();
 		for (int i = 0; i < visuals.Length; i++) {
 			visuals [i].enabled = true;
@@ -128,14 +165,5 @@ public class Fish : MonoBehaviour {
 
 	public float RandomBinomial(){
 		return Random.Range (0f, 1f) - Random.Range (0f, 1f);
-	}
-
-	void OnDrawGizmosSelected(){
-		Gizmos.color = new Color (0,1f,0f);
-		Gizmos.DrawWireSphere (position, conf.separationRadius);
-		Gizmos.color = new Color (0.5f,0.5f,0f);
-		Gizmos.DrawWireSphere (position, conf.cohesionRadius);
-		Gizmos.color = new Color (1f,0f,0f);
-		Gizmos.DrawWireSphere (position, conf.alignmentRadius);
 	}
 }
