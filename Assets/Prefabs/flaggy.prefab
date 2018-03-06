@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 64610242130759240}
   - component: {fileID: 64255046258325650}
   - component: {fileID: 64064844615454288}
+  - component: {fileID: 64964013055545694}
+  - component: {fileID: 64818496971507406}
   m_Layer: 0
   m_Name: flaggy
   m_TagString: Untagged
@@ -105,6 +107,34 @@ MeshCollider:
 --- !u!64 &64746061396009898
 MeshCollider:
   m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927321511571376}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: cebf8bdcbb1e1b1499ce7de9e6c5de76, type: 3}
+--- !u!64 &64818496971507406
+MeshCollider:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927321511571376}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: cebf8bdcbb1e1b1499ce7de9e6c5de76, type: 3}
+--- !u!64 &64964013055545694
+MeshCollider:
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1927321511571376}
