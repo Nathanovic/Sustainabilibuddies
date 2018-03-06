@@ -45,7 +45,7 @@ Shader "Shader Forge/Water_Color" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 d3d11_9x 
             #pragma target 2.0
             uniform sampler2D _GrabTexture;
             uniform float4 _Color;
@@ -122,8 +122,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 normalDirection = i.normalDir;
                 float3 viewReflectDirection = reflect( -viewDirection, normalDirection );
                 float node_9653 = (objPos.g-i.posWorld.g);
-                float3 node_7726 = (node_9653*normalDirection*(-1.0));
-                float2 sceneUVs = (i.projPos.xy / i.projPos.w) + node_7726.rg;
+                float2 sceneUVs = (i.projPos.xy / i.projPos.w) + (node_9653*normalDirection*(-1.0)).rg;
                 float4 sceneColor = tex2D(_GrabTexture, sceneUVs);
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 lightColor = _LightColor0.rgb;
@@ -231,8 +230,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
-                float node_7442 = ((1.0 - node_1676)*_Opacity);
-                fixed4 finalRGBA = fixed4(lerp(sceneColor.rgb, finalColor,node_7442),1);
+                fixed4 finalRGBA = fixed4(lerp(sceneColor.rgb, finalColor,((1.0 - node_1676)*_Opacity)),1);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
                 return finalRGBA;
             }
@@ -262,7 +260,7 @@ Shader "Shader Forge/Water_Color" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 d3d11_9x 
             #pragma target 2.0
             uniform sampler2D _GrabTexture;
             uniform float4 _Color;
@@ -329,8 +327,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
                 float3 normalDirection = i.normalDir;
                 float node_9653 = (objPos.g-i.posWorld.g);
-                float3 node_7726 = (node_9653*normalDirection*(-1.0));
-                float2 sceneUVs = (i.projPos.xy / i.projPos.w) + node_7726.rg;
+                float2 sceneUVs = (i.projPos.xy / i.projPos.w) + (node_9653*normalDirection*(-1.0)).rg;
                 float4 sceneColor = tex2D(_GrabTexture, sceneUVs);
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 lightColor = _LightColor0.rgb;
@@ -386,8 +383,7 @@ Shader "Shader Forge/Water_Color" {
                 float3 diffuse = directDiffuse * diffuseColor;
 /// Final Color:
                 float3 finalColor = diffuse + specular;
-                float node_7442 = ((1.0 - node_1676)*_Opacity);
-                fixed4 finalRGBA = fixed4(finalColor * node_7442,0);
+                fixed4 finalRGBA = fixed4(finalColor * ((1.0 - node_1676)*_Opacity),0);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
                 return finalRGBA;
             }
@@ -417,7 +413,7 @@ Shader "Shader Forge/Water_Color" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 d3d11_9x 
             #pragma target 2.0
             uniform sampler2D _normalmap; uniform float4 _normalmap_ST;
             uniform sampler2D _normalmap_copy; uniform float4 _normalmap_copy_ST;
@@ -486,7 +482,7 @@ Shader "Shader Forge/Water_Color" {
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
             #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma only_renderers d3d9 d3d11 glcore gles gles3 d3d11_9x 
             #pragma target 2.0
             uniform float4 _Color;
             uniform float _Metallic;
