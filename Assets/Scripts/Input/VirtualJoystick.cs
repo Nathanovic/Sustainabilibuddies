@@ -23,12 +23,18 @@ public class VirtualJoystick : ManagedBehaviour {
 
 	private InputHandler inputHandler;
 
+	public bool useDirectionPointer;
+
+	private bool joystickActive = true;
+
+	public ShipInteractions interactionScript;
+
 	protected override void Awake(){
 		base.Awake ();
 		_instance = this;
 	}
 
-	void Start(){
+	private void Start(){
 		background = GetComponent<RectTransform> ();
 		joystick = transform.GetChild (0).GetComponent<RectTransform> ();
 
@@ -39,9 +45,13 @@ public class VirtualJoystick : ManagedBehaviour {
 
 		if (inputHandler == null)
 			SetUpInputHandler ();
+
+		//avoid the joystick from popping up when the boat should not be controlled
+		GameManager.instance.onBoatControlsDisabled += BoatControlsDisabled;
+		GameManager.instance.onBoatControlsEnabled += BoatControlsEnabled;
 	}
 
-	void SetUpInputHandler(){
+	private void SetUpInputHandler(){
 		if (Application.platform == RuntimePlatform.Android)
 			inputHandler = new TouchInputHandler ();
 		else
@@ -56,6 +66,9 @@ public class VirtualJoystick : ManagedBehaviour {
 	}
 
 	public override void ManagedUpdate(){
+		if (!joystickActive)
+			return;
+
 		if (!inputHandler.isDragging) {
 			if(inputHandler.PointerDown())
 				PointerDown ();
@@ -67,7 +80,7 @@ public class VirtualJoystick : ManagedBehaviour {
 		} 
 	}
 
-	void PointerDown(){
+	private void PointerDown(){
 		Vector2 localPoint = new Vector2 ();
 		if (disabledCVG) {
 			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
@@ -84,13 +97,16 @@ public class VirtualJoystick : ManagedBehaviour {
 			}
 		}
 
-		directionPointer.Enable ();
+		if (useDirectionPointer) {
+			directionPointer.Enable ();
+		}
+
 		cvg.Activate ();
 		disableCounter.StopCounter ();
 		DragPointer ();
 	}
 
-	void DragPointer (){
+	private void DragPointer (){
 		Vector2 pos = new Vector2 ();
 		if(RectTransformUtility.ScreenPointToLocalPointInRectangle(background,
 			Input.mousePosition, null, out pos))
@@ -109,16 +125,25 @@ public class VirtualJoystick : ManagedBehaviour {
 		}
 	}
 
-	void PointerUp (){
+	private void PointerUp (){
 		directionPointer.Disable ();
 		movementVector = new Vector3 ();
 		joystick.anchoredPosition = inputVector;
 		disableCounter.StartCounter ();
 	}
 
-	void DisableCVG(){
+	private void DisableCVG(){
 		disableCounter.StopCounter ();
 		disabledCVG = true;
 		cvg.Deactivate ();
+	}
+
+	private void BoatControlsDisabled(){
+		PointerUp ();
+		joystickActive = false;
+	}
+
+	private void BoatControlsEnabled(){
+		joystickActive = true;
 	}
 }

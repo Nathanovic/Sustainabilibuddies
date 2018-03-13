@@ -14,8 +14,17 @@ public class InputController : ManagedBehaviour {
 
 		if (joystickScript.movementVector.sqrMagnitude > 0f) {
 			Vector3 inputVector = transform.InverseTransformDirection (joystickScript.movementVector);
+
 			v = inputVector.magnitude;
 			h = inputVector.x;
+			if (inputVector.z < 0f) {
+				if (h < 0f) {
+					h = -1f;
+				}
+				else {
+					h = 1f;
+				}
+			}
 		}
 
 		ship.Move (h, v);//, v, 0f);

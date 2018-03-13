@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance;
-	private ProgressionHandler progressionScript;
 	public Transform sea;
 	public Text feedbackText;
 	private int currentLevel = 1;
@@ -33,6 +32,11 @@ public class GameManager : MonoBehaviour {
 	public float fadeTextInDuration = 4.5f;
 	public int showBigTextDuration = 20;
 
+	public Permit startPermit;
+
+	public event DefaultDelegate onBoatControlsDisabled;
+	public event DefaultDelegate onBoatControlsEnabled;
+
 	void Awake(){
 		instance = this;
 	}
@@ -44,17 +48,10 @@ public class GameManager : MonoBehaviour {
 		endWarning = showBigTextDuration.ToString () + endWarning;
 		gameText.text = endWarning;
 
-		FishManager currentFishManager = sea.GetChild (currentLevel).GetComponent<FishManager> ();
-		currentFishManager.StartSpawning ();
-
-		progressionScript = GetComponent<ProgressionHandler> ();
-		progressionScript.AddPermit (currentFishManager);
-
 		if (currentLevel == 1) {
 			gameLoopDependables.Sort ();
-			foreach (ManagedBehaviour behav in gameLoopDependables) {
-				Debug.Log (behav.name + " sortValue: " + behav.sortValue);
-			}
+
+			ProgressionManager.instance.AddPermit (startPermit);
 
 			if (finalBuild) {
 				menuPanel.Activate ();
@@ -144,7 +141,7 @@ public class GameManager : MonoBehaviour {
 
 		gameText.enabled = false; 
 		gameIsRunning = false;
-		progressionScript.EvaluateProgress ();
+		ProgressionManager.instance.EvaluateProgress ();
 	}
 
 	public void LoadNextLevel(){
@@ -170,5 +167,15 @@ public class GameManager : MonoBehaviour {
 
 	public void Restart(){
 		SceneManager.LoadScene (0);
+	}
+
+	//used to prevent the player from controlling the boat:
+	public void DisableBoatControls(){
+		onBoatControlsDisabled ();
+	}
+
+	//used to give back control over the boat to the player
+	public void EnableBoatControls(){
+		onBoatControlsEnabled ();
 	}
 }

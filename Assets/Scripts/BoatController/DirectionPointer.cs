@@ -9,6 +9,7 @@ public class DirectionPointer : MonoBehaviour {
 
 	void Start(){
 		myImg = GetComponentInChildren<Image> ();
+		Disable ();
 	}
 
 	public void Enable(){

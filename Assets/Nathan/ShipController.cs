@@ -2,6 +2,7 @@
 
 public class ShipController : MonoBehaviour {
 
+	private ShipStats stats;
 	private Rigidbody rb;
 	private Transform visual;
 	private Vector3 visualDefaultEuler;
@@ -9,13 +10,11 @@ public class ShipController : MonoBehaviour {
 	private float speedFactor = 1f;//[0 - 1]
 	[Range(0f, 1f)]public float netSpeedFactor = 0.6f;
 	private float currentSpeed;
-	public float maxForwardSpeed;
 	public float backwardsSpeedFactor;
 	public float accSpeed;
 	[Range(0f,7f)]public float speedDegenTime = 4f;
 
 	private float currentRotateSpeed;
-	public float maxRotationSpeed;
 	public float accRotation;
 	[Range(0f,3f)]public float rotDegenTime = 1f;
 
@@ -23,7 +22,20 @@ public class ShipController : MonoBehaviour {
 
 	public float rotationSpeedDegenFactor = 0.1f;
 
+	//stats implementation:
+	private float maxForwardSpeed {
+		get { 
+			return stats.sailSpeed;	
+		}
+	}
+	private float maxRotationSpeed {
+		get { 
+			return stats.rotationSpeed;	
+		}
+	}
+
 	void Start(){
+		stats = GetComponent<ShipStats> ();
 		rb = GetComponent<Rigidbody> ();
 		visual = transform.GetChild (0);
 		visualDefaultEuler = visual.rotation.eulerAngles;

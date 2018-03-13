@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - City
   - Fish
+  - Dock
   layers:
   - Default
   - TransparentFX
@@ -17,7 +17,7 @@ TagManager:
   - 
   - ShipWheels
   - FishBounds
-  - 
+  - Sonar
   - 
   - 
   - 
