@@ -2,9 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class VirtualJoystick : ManagedBehaviour {
-
-	private static VirtualJoystick _instance;
+public class VirtualJoystick : MonoBehaviour {
 
 	private RectTransform background;
 	private RectTransform joystick;
@@ -15,22 +13,13 @@ public class VirtualJoystick : ManagedBehaviour {
 	private bool disabledCVG;
 
 	private Vector3 inputVector;
-	public Vector3 movementVector;
+	private Vector3 movementVector;
 
 	public Transform camTransform;
-	public DirectionPointer directionPointer;
-	public float maxSecondTouchDist = 90f;
+	public float maxInputTouchDist = 90f;
 
-	public bool useDirectionPointer;
-
+	private bool draggingJoystick = false;
 	private bool joystickActive = true;
-
-	public ShipInteractions interactionScript;
-
-	protected override void Awake(){
-		base.Awake ();
-		_instance = this;
-	}
 
 	private void Start(){
 		background = GetComponent<RectTransform> ();
@@ -46,56 +35,62 @@ public class VirtualJoystick : ManagedBehaviour {
 		GameManager.instance.onBoatControlsEnabled += BoatControlsEnabled;
 	}
 
-	public override void ManagedUpdate(){
-		bool isDragging = inputHandler.isDragging;
-		bool pointerUp = false;//make sure we always update inputHandler.isDragging
-		if(isDragging){
-			pointerUp = inputHandler.PointerUp();
-			print ("pointer up: " + pointerUp);
-		}
-
+	//called by the inputManager
+	public void UpdateJoystick(bool startDragging, bool stopDragging){
 		if (!joystickActive)
 			return;
 
-		if (!isDragging) {
-			if(inputHandler.PointerDown())
-				PointerDown ();
-		} else {
-			if (!pointerUp)
-				DragPointer ();
-			else
-				PointerUp ();
+		if (startDragging) {
+			TryStartDragginJoystick ();
 		} 
+		else if(stopDragging){
+			draggingJoystick = false;
+			StopDraggingJoystick ();
+		} 
+		else if (draggingJoystick) {
+			DragPointer ();
+		}
 	}
 
-	private void PointerDown(){
+	private void TryStartDragginJoystick(){
+		Vector2 inputPos = ShipInputManager.instance.inputPosition;
 		Vector2 localPoint = new Vector2 ();
+
+		/*
 		if (disabledCVG) {
-			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
+			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, inputPos, null, out localPoint);
 			Vector2 normalizedPoint = background.anchoredPosition + localPoint;
 			//background.anchoredPosition = normalizedPoint;
 
 			disabledCVG = false;
 		}
 		else {
-			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
+			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, inputPos, null, out localPoint);
 			if(localPoint.magnitude > maxSecondTouchDist){
 				Vector2 normalizedPoint = background.anchoredPosition + localPoint;
-				//background.anchoredPosition = normalizedPoint;				
+				//background.anchoredPosition = normalizedPoint;		
+
+				draggingJoystick = true; 
 			}
 		}
 
 		if (useDirectionPointer) {
 			directionPointer.Enable ();
 		}
+		*/
 
-		EnableCVG ();
+		RectTransformUtility.ScreenPointToLocalPointInRectangle (background, inputPos, null, out localPoint);
+		if(localPoint.magnitude <= maxInputTouchDist){
+			draggingJoystick = true; 
+			DragPointer ();
+		}
 	}
 
 	private void DragPointer (){
+		Vector2 inputPos = ShipInputManager.instance.inputPosition;
 		Vector2 pos = new Vector2 ();
 		if(RectTransformUtility.ScreenPointToLocalPointInRectangle(background,
-			Input.mousePosition, null, out pos))
+			inputPos, null, out pos))
 		{
 			pos.x = pos.x / background.sizeDelta.x;
 			pos.y = pos.y / background.sizeDelta.y;
@@ -105,16 +100,17 @@ public class VirtualJoystick : ManagedBehaviour {
 
 			joystick.anchoredPosition = new Vector3 (inputVector.x * background.sizeDelta.x * 0.5f, inputVector.z * background.sizeDelta.y * 0.5f, 0f);
 
-			movementVector = inputVector;
-			movementVector = camTransform.TransformDirection (movementVector);
-			directionPointer.Rotate (movementVector);
+			movementVector = camTransform.TransformDirection (inputVector);
+
+			Debug.DrawRay (camTransform.position, movementVector * 20f, Color.red);
 		}
 	}
 
-	private void PointerUp (){
+	private void StopDraggingJoystick(){
 		//directionPointer.Disable ();
 		inputVector = movementVector = Vector3.zero;
 		joystick.anchoredPosition = inputVector;
+		draggingJoystick = false;
 		Debug.Log ("pointer up!");
 		//disableCounter.StartCounter ();
 	}
@@ -132,14 +128,18 @@ public class VirtualJoystick : ManagedBehaviour {
 	}
 
 	private void BoatControlsDisabled(){
-		PointerUp ();
+		StopDraggingJoystick ();
 		DisableCVG ();
-		disableCounter.StartCounter ();
 		joystickActive = false;
+		draggingJoystick = false;
 	}
 
 	private void BoatControlsEnabled(){
 		joystickActive = true;
 		EnableCVG ();
+	}
+
+	public Vector2 GetMoveVector(){
+		return movementVector;
 	}
 }

@@ -34,7 +34,7 @@ public class ShipController : MonoBehaviour {
 		}
 	}
 
-	void Start(){
+	private void Start(){
 		stats = GetComponent<ShipStats> ();
 		rb = GetComponent<Rigidbody> ();
 		visual = transform.GetChild (0);
@@ -45,7 +45,13 @@ public class ShipController : MonoBehaviour {
 		netScript.onNetUp += NetUp;
 	}
 
-	public void Move(float horizontal, float vertical){
+	public Vector3 moveAss;
+	private void FixedUpdate(){
+		//get input:
+		Vector3 moveAssignment = moveAss = ShipInputManager.instance.movement;
+		float horizontal = ShipInputManager.instance.horizontalInput;
+		float vertical = 0f;
+
 		//set rotate speed:
 		if(horizontal != 0){
 			currentRotateSpeed += horizontal * accRotation;

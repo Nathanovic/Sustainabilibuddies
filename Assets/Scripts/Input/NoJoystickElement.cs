@@ -5,6 +5,6 @@ public class NoJoystickElement : MonoBehaviour {
 
 	void Start () {
 		RectTransform rt = GetComponent<RectTransform> ();
-		VirtualJoystick.AddNotClickable (rt);
+		ShipInputManager.instance.AddNotClickable (rt);
 	}
 }
