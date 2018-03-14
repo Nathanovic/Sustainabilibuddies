@@ -4,6 +4,8 @@ using UnityEngine;
 public abstract class InputHandler {
 	private List<RectTransform> noJoyElements = new List<RectTransform> ();
 	public bool isDragging;
+	protected float previousTabMoment = -1f;
+	protected const float doubleTabTime = 0.1f;
 
 	public void AddNoInputElement(RectTransform njEl){
 		noJoyElements.Add (njEl);
@@ -22,6 +24,18 @@ public abstract class InputHandler {
 	public abstract bool PointerDown ();
 	public abstract bool PointerUp ();
 	public abstract Vector2 PointerPos ();
+	public bool DoubleTapped (){
+		if (PointerUp()) {
+			float tapMoment = Time.time;	
+
+			if ((tapMoment - previousTabMoment) <= doubleTabTime) {
+				previousTabMoment = tapMoment;
+				return true;
+			}
+		}
+
+		return false;		
+	}
 }
 
 public class MouseInputHandler : InputHandler{
@@ -45,6 +59,18 @@ public class MouseInputHandler : InputHandler{
 	}
 	public override Vector2 PointerPos (){
 		return Input.mousePosition;
+	}
+	public override bool DoubleTapped () {
+		if (Input.GetMouseButtonUp (0)) {
+			float tapMoment = Time.time;	
+
+			if ((tapMoment - previousTabMoment) <= doubleTabTime) {
+				previousTabMoment = tapMoment;
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 

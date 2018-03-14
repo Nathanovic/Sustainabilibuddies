@@ -15,13 +15,11 @@ public class VirtualJoystick : ManagedBehaviour {
 	private bool disabledCVG;
 
 	private Vector3 inputVector;
-	[HideInInspector]public Vector3 movementVector;
+	public Vector3 movementVector;
 
 	public Transform camTransform;
 	public DirectionPointer directionPointer;
 	public float maxSecondTouchDist = 90f;
-
-	private InputHandler inputHandler;
 
 	public bool useDirectionPointer;
 
@@ -41,39 +39,29 @@ public class VirtualJoystick : ManagedBehaviour {
 		cvg = GetComponent<CanvasGroup> ();
 		disableCounter = new CanvasCounter (cvg, cvgDisableTime, fadeOutTime);
 		disableCounter.onCount += DisableCVG;
-		DisableCVG ();
-
-		if (inputHandler == null)
-			SetUpInputHandler ();
+		//DisableCVG ();
 
 		//avoid the joystick from popping up when the boat should not be controlled
 		GameManager.instance.onBoatControlsDisabled += BoatControlsDisabled;
 		GameManager.instance.onBoatControlsEnabled += BoatControlsEnabled;
 	}
 
-	private void SetUpInputHandler(){
-		if (Application.platform == RuntimePlatform.Android)
-			inputHandler = new TouchInputHandler ();
-		else
-			inputHandler = new MouseInputHandler();
-	}
-
-	public static void AddNotClickable(RectTransform noInputEle){
-		if (_instance.inputHandler == null)
-			_instance.SetUpInputHandler ();
-
-		_instance.inputHandler.AddNoInputElement (noInputEle);
-	}
-
 	public override void ManagedUpdate(){
+		bool isDragging = inputHandler.isDragging;
+		bool pointerUp = false;//make sure we always update inputHandler.isDragging
+		if(isDragging){
+			pointerUp = inputHandler.PointerUp();
+			print ("pointer up: " + pointerUp);
+		}
+
 		if (!joystickActive)
 			return;
 
-		if (!inputHandler.isDragging) {
+		if (!isDragging) {
 			if(inputHandler.PointerDown())
 				PointerDown ();
-		} else if (inputHandler.isDragging) {
-			if (!inputHandler.PointerUp ())
+		} else {
+			if (!pointerUp)
 				DragPointer ();
 			else
 				PointerUp ();
@@ -85,7 +73,7 @@ public class VirtualJoystick : ManagedBehaviour {
 		if (disabledCVG) {
 			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
 			Vector2 normalizedPoint = background.anchoredPosition + localPoint;
-			background.anchoredPosition = normalizedPoint;
+			//background.anchoredPosition = normalizedPoint;
 
 			disabledCVG = false;
 		}
@@ -93,7 +81,7 @@ public class VirtualJoystick : ManagedBehaviour {
 			RectTransformUtility.ScreenPointToLocalPointInRectangle (background, Input.mousePosition, null, out localPoint);
 			if(localPoint.magnitude > maxSecondTouchDist){
 				Vector2 normalizedPoint = background.anchoredPosition + localPoint;
-				background.anchoredPosition = normalizedPoint;				
+				//background.anchoredPosition = normalizedPoint;				
 			}
 		}
 
@@ -101,9 +89,7 @@ public class VirtualJoystick : ManagedBehaviour {
 			directionPointer.Enable ();
 		}
 
-		cvg.Activate ();
-		disableCounter.StopCounter ();
-		DragPointer ();
+		EnableCVG ();
 	}
 
 	private void DragPointer (){
@@ -126,10 +112,11 @@ public class VirtualJoystick : ManagedBehaviour {
 	}
 
 	private void PointerUp (){
-		directionPointer.Disable ();
-		movementVector = new Vector3 ();
+		//directionPointer.Disable ();
+		inputVector = movementVector = Vector3.zero;
 		joystick.anchoredPosition = inputVector;
-		disableCounter.StartCounter ();
+		Debug.Log ("pointer up!");
+		//disableCounter.StartCounter ();
 	}
 
 	private void DisableCVG(){
@@ -138,12 +125,21 @@ public class VirtualJoystick : ManagedBehaviour {
 		cvg.Deactivate ();
 	}
 
+	private void EnableCVG(){
+		cvg.Activate ();
+		disableCounter.StopCounter ();
+		DragPointer ();		
+	}
+
 	private void BoatControlsDisabled(){
 		PointerUp ();
+		DisableCVG ();
+		disableCounter.StartCounter ();
 		joystickActive = false;
 	}
 
 	private void BoatControlsEnabled(){
 		joystickActive = true;
+		EnableCVG ();
 	}
 }
