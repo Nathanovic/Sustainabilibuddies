@@ -365,12 +365,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 48944939}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 22.9, y: 2.7999992, z: 66.2}
   m_LocalScale: {x: 40, y: 10, z: 30}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 698784693}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49486321
 GameObject:
@@ -1863,7 +1863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &290280119
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4002,6 +4002,10 @@ Transform:
   - {fileID: 789994001}
   - {fileID: 1023966721}
   - {fileID: 864484479}
+  - {fileID: 946508564}
+  - {fileID: 48944943}
+  - {fileID: 803970900}
+  - {fileID: 1863052086}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4606,7 +4610,7 @@ Transform:
   - {fileID: 1112928699}
   - {fileID: 221431718}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: -90}
 --- !u!23 &767488165
 MeshRenderer:
@@ -5236,7 +5240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishesInNet: []
   fillRect: {fileID: 1076393554}
-  myState: 2
+  myState: 1
+  maxCatchFishInterval: 0.3
 --- !u!54 &790659829
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5345,8 +5350,8 @@ Transform:
   m_LocalPosition: {x: -53.1, y: -2.5, z: 25}
   m_LocalScale: {x: 151.33246, y: 10, z: 30}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 698784693}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 14.960001, y: -26.608002, z: 0}
 --- !u!1 &809662696
 GameObject:
@@ -6811,12 +6816,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 946508560}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 93.8, y: 2.8, z: 40.8}
   m_LocalScale: {x: 40, y: 10, z: 30}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 698784693}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &972212245
 GameObject:
@@ -7440,6 +7445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sortValue: -100
   joystickScript: {fileID: 1783222147}
+  doubleTabTime: 0.4
+  inputVec: {x: 0, y: 0, z: 0}
+  moveVec: {x: 0, y: 0, z: 0}
 --- !u!114 &1076108847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7459,6 +7467,7 @@ MonoBehaviour:
   rotDegenTime: 0.35
   rotSpeedRelation: 0.05
   rotationSpeedDegenFactor: 0.03
+  moveAss: {x: 0, y: 0, z: 0}
 --- !u!114 &1076108848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10388,6 +10397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cvgDisableTime: 0.75
   fadeOutTime: 0.5
+  movementVector: {x: 0, y: 0, z: 0}
   camTransform: {fileID: 1590445504}
   maxInputTouchDist: 175
 --- !u!1 &1823154804
@@ -10932,8 +10942,8 @@ Transform:
   m_LocalPosition: {x: -67.3, y: 2.7999992, z: 53.4}
   m_LocalScale: {x: 151.33246, y: 10, z: 30}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 698784693}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -26.608002, z: 0}
 --- !u!1 &1870758669
 GameObject:

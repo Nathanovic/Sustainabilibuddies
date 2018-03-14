@@ -80,11 +80,12 @@ public class ShipInputManager : ManagedBehaviour {
 			float tapMoment = Time.time;	
 
 			if ((tapMoment - previousTabMoment) <= doubleTabTime) {
-				Debug.Log ("double tapped!" + (tapMoment - previousTabMoment).ToString());
 				doubleTapped = true;
+				previousTabMoment = -1f;//prevent two double taps in three finger-taps
 			}
-
-			previousTabMoment = tapMoment;
+			else {
+				previousTabMoment = tapMoment;
+			}
 		}
 
 		//set movementVector using the tap-input we received and putting this in the joystickScript:

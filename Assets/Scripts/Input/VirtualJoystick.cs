@@ -13,7 +13,7 @@ public class VirtualJoystick : MonoBehaviour {
 	private bool disabledCVG;
 
 	private Vector3 inputVector;
-	private Vector3 movementVector;
+	public Vector3 movementVector;
 
 	public Transform camTransform;
 	public float maxInputTouchDist = 90f;
@@ -101,8 +101,6 @@ public class VirtualJoystick : MonoBehaviour {
 			joystick.anchoredPosition = new Vector3 (inputVector.x * background.sizeDelta.x * 0.5f, inputVector.z * background.sizeDelta.y * 0.5f, 0f);
 
 			movementVector = camTransform.TransformDirection (inputVector);
-
-			Debug.DrawRay (camTransform.position, movementVector * 20f, Color.red);
 		}
 	}
 
@@ -111,7 +109,6 @@ public class VirtualJoystick : MonoBehaviour {
 		inputVector = movementVector = Vector3.zero;
 		joystick.anchoredPosition = inputVector;
 		draggingJoystick = false;
-		Debug.Log ("pointer up!");
 		//disableCounter.StartCounter ();
 	}
 
@@ -139,7 +136,7 @@ public class VirtualJoystick : MonoBehaviour {
 		EnableCVG ();
 	}
 
-	public Vector2 GetMoveVector(){
+	public Vector3 GetMoveVector(){
 		return movementVector;
 	}
 }

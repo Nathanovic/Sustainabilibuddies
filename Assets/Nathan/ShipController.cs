@@ -50,7 +50,7 @@ public class ShipController : MonoBehaviour {
 		//get input:
 		Vector3 moveAssignment = moveAss = ShipInputManager.instance.movement;
 		float horizontal = ShipInputManager.instance.horizontalInput;
-		float vertical = 0f;
+		float vertical = moveAss.z;
 
 		//set rotate speed:
 		if(horizontal != 0){
