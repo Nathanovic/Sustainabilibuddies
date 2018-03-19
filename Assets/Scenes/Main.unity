@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45012468, g: 0.5001672, b: 0.5754506, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012462, g: 0.5001667, b: 0.5754502, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 48944940}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,8 +630,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.0015143454, y: 0.019164832, z: -0.00041352957}
-    m_Extent: {x: 0.0014380335, y: 0.009187966, z: 0.01227656}
+    m_Center: {x: 0.0015143156, y: 0.019164832, z: -0.00041352212}
+    m_Extent: {x: 0.0014380335, y: 0.009187966, z: 0.0122765545}
   m_DirtyAABB: 0
 --- !u!1 &81541371
 GameObject:
@@ -3014,7 +3014,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -40.85
+      value: -19.2
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3022,7 +3022,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -9.009999
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4322801690753588, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3065,6 +3065,31 @@ Prefab:
     - target: {fileID: 1991172483908734, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0.13235295
+      objectReference: {fileID: 0}
+    - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.13235295
+      objectReference: {fileID: 0}
+    - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.13235295
+      objectReference: {fileID: 0}
+    - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_BackGroundColor.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114088698852503154, guid: d356d6abb6a890d429fc43bae3fbe463, type: 2}
@@ -4165,7 +4190,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.0014310181, y: 0.019073702, z: -0.00041352957}
+    m_Center: {x: -0.0014310181, y: 0.019073702, z: -0.00041353703}
     m_Extent: {x: 0.0014328123, y: 0.0093048625, z: 0.012191855}
   m_DirtyAABB: 0
 --- !u!114 &705968085
@@ -5224,8 +5249,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.000000029802322, y: -0.00000047683716, z: 4.656613e-10}
-    m_Extent: {x: 0.0055290656, y: 0.66998005, z: 0.0051596914}
+    m_Center: {x: 0, y: 0.00000047683716, z: 4.656613e-10}
+    m_Extent: {x: 0.0055290535, y: 0.66997993, z: 0.005159691}
   m_DirtyAABB: 0
 --- !u!114 &790659828
 MonoBehaviour:
@@ -5282,7 +5307,7 @@ GameObject:
   - component: {fileID: 803970897}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5654,7 +5679,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0000000037252903, z: 0}
-    m_Extent: {x: 0.004998212, y: 0.004999999, z: 0.0049999994}
+    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.005}
   m_DirtyAABB: 0
 --- !u!183 &860106940
 Cloth:
@@ -6752,7 +6777,7 @@ GameObject:
   - component: {fileID: 946508561}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7407,7 +7432,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1076108843}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.85, y: 0.54, z: 7.42}
+  m_LocalPosition: {x: -19.2, y: 0.54, z: 11.929999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1886799607}
@@ -7467,6 +7492,11 @@ MonoBehaviour:
   rotDegenTime: 0.35
   rotSpeedRelation: 0.05
   rotationSpeedDegenFactor: 0.03
+  velocityThreshold: 2
+  bounceMultiplier: 1.5
+  stunDuration: 0.2
+  maxStunDuration: 2
+  maxBounceMagnitude: 10
   moveAss: {x: 0, y: 0, z: 0}
 --- !u!114 &1076108848
 MonoBehaviour:
@@ -7872,7 +7902,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1009256954}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.4926762
+  m_Size: 0.49267617
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9743,7 +9773,7 @@ MonoBehaviour:
   endWarning: ' seconds left! Speed it up!'
   menuPanel: {fileID: 1104586579}
   levelInfoScript: {fileID: 1667002863}
-  finalBuild: 0
+  finalBuild: 1
   noBuildObject: {fileID: 698784692}
   mainGameDurationInSecs: 150
   fadeTextInDuration: 4.5
@@ -10874,7 +10904,7 @@ GameObject:
   - component: {fileID: 1863052083}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
