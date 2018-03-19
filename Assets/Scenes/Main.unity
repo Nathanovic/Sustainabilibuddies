@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45012462, g: 0.5001667, b: 0.5754502, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012468, g: 0.5001672, b: 0.5754506, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1333,7 +1333,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 594, y: -8.600005}
+  m_AnchoredPosition: {x: 203.72447, y: -8.600005}
   m_SizeDelta: {x: 653.5, y: 601.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &198493416
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2416198, g: 0.29181316, b: 0.8014706, a: 0.716}
+  m_Color: {r: 0.2416198, g: 0.29181316, b: 0.8014706, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4240,8 +4240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320.3, y: -8.6}
-  m_SizeDelta: {x: 1133.7, y: 717.5}
+  m_AnchoredPosition: {x: 0, y: -8.6}
+  m_SizeDelta: {x: 1766.7, y: 717.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &709964794
 MonoBehaviour:
@@ -4411,8 +4411,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000022004167, y: -0.00002670279}
-  m_SizeDelta: {x: 1149.9, y: 717.5}
+  m_AnchoredPosition: {x: -0.00004355565, y: -0.00002670279}
+  m_SizeDelta: {x: 431.3, y: 717.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &722172740
 MonoBehaviour:
@@ -4429,6 +4429,7 @@ MonoBehaviour:
   ecoScript: {fileID: 1076108849}
   interactionScript: {fileID: 1076108850}
   buyButton: {fileID: 1406388507}
+  infoPanelTransform: {fileID: 198493415}
   upgradeTitleText: {fileID: 563223221}
   costText: {fileID: 41079738}
   resultText: {fileID: 1310640789}
@@ -5679,7 +5680,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0000000037252903, z: 0}
-    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.005}
+    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.0049999994}
   m_DirtyAABB: 0
 --- !u!183 &860106940
 Cloth:
@@ -7492,12 +7493,12 @@ MonoBehaviour:
   rotDegenTime: 0.35
   rotSpeedRelation: 0.05
   rotationSpeedDegenFactor: 0.03
-  velocityThreshold: 2
-  bounceMultiplier: 1.5
-  stunDuration: 0.2
+  velocityThreshold: 1
+  bounceMultiplier: 1.6
+  stunMultiplier: 0.17
   maxStunDuration: 2
-  maxBounceMagnitude: 10
-  moveAss: {x: 0, y: 0, z: 0}
+  minBounceMagnitude: 8
+  maxBounceMagnitude: 13
 --- !u!114 &1076108848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7544,7 +7545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sailSpeed: 9
-  rotationSpeed: 7
+  rotationSpeed: 8.2
   netSize: 10
 --- !u!1 &1076393552
 GameObject:
@@ -7901,8 +7902,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1009256955}
   m_HandleRect: {fileID: 1009256954}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.49267617
+  m_Value: 0.00000028302875
+  m_Size: 0.80224663
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8130,8 +8131,8 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1194198900}
   m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
+  m_Alpha: 1
+  m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1194198903
@@ -8537,12 +8538,12 @@ MonoBehaviour:
   wanderDistance: 1
   wanderPriority: 1
   separationRadius: 2.5
-  separationPriority: 6
-  cohesionRadius: 10
-  cohesionPriority: 7
-  alignmentRadius: 5.5
+  separationPriority: 5
+  cohesionRadius: 6
+  cohesionPriority: 5
+  alignmentRadius: 4
   alignmentPriority: 2
-  seekTargetPriority: 2
+  seekTargetPriority: 3
   boundsLM:
     serializedVersion: 2
     m_Bits: 512
@@ -9059,7 +9060,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1856491963}
   m_HandleRect: {fileID: 1856491962}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9773,7 +9774,7 @@ MonoBehaviour:
   endWarning: ' seconds left! Speed it up!'
   menuPanel: {fileID: 1104586579}
   levelInfoScript: {fileID: 1667002863}
-  finalBuild: 1
+  finalBuild: 0
   noBuildObject: {fileID: 698784692}
   mainGameDurationInSecs: 150
   fadeTextInDuration: 4.5
@@ -10025,7 +10026,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1900, y: 1070}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

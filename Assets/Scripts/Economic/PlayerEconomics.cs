@@ -4,12 +4,7 @@ using UnityEngine.UI;
 public class PlayerEconomics : MonoBehaviour {
 
 	private ShipStats statScript;
-
 	public IntValueHolder fishValueHolder;
-
-	private ShipController boatScript;
-
-	public Permit firstPermit;
 
 	void Awake(){
 		fishValueHolder = new IntValueHolder ();		
@@ -18,7 +13,6 @@ public class PlayerEconomics : MonoBehaviour {
 	void Start(){
 		statScript = GetComponent<ShipStats> ();
 		FishingNet fishingScript = GetComponentInChildren<FishingNet> ();
-		boatScript = GetComponent<ShipController> ();
 
 		fishingScript.onNetUp += AddFish;
 	}

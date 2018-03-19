@@ -19,19 +19,11 @@ public class ShipInteractions : MonoBehaviour {
 
 	void OnCollisionEnter(Collision coll){
 		if (coll.collider.tag == "Obstacle") {
-			Vector3 bounceDir = coll.relativeVelocity;
+			float bounceForce = coll.relativeVelocity.magnitude;
+			Vector3 bounceDir = coll.contacts [0].normal;
 			bounceDir.y = 0f;
+			bounceDir = bounceDir.normalized * bounceForce;
 			onHitObstacle (bounceDir);
-
-			Debug.Log("bounce with magnitude: " + bounceDir.magnitude.ToString());
-			//if(Physics.Raycast(transform.position, coll.collider.po
-			//DebugBounce (bounceDir);
 		}
-	}
-
-	void DebugBounce(Vector3 bounceDir){
-		bounceDir.y = 0f;
-		Debug.DrawRay (transform.position, bounceDir, Color.red, 1f);
-		GetComponent<Rigidbody> ().AddForce (bounceDir);
 	}
 }

@@ -26,8 +26,9 @@ public class ShipController : MonoBehaviour {
 	public float velocityThreshold = 1f;
 	public float bounceMultiplier = 1f;
 	private float remainingStunDuration = 0f;
-	public float stunDuration = 1f;
+	public float stunMultiplier = 1f;
 	public float maxStunDuration = 2f;
+	public float minBounceMagnitude = 3f;
 	public float maxBounceMagnitude = 10f;
 
 	//stats implementation:
@@ -56,7 +57,6 @@ public class ShipController : MonoBehaviour {
 		interactionScript.onHitObstacle += BounceOff;
 	}
 
-	public Vector3 moveAss;
 	private void FixedUpdate(){
 		if (remainingStunDuration > 0f) {
 			remainingStunDuration -= Time.fixedDeltaTime;
@@ -64,11 +64,12 @@ public class ShipController : MonoBehaviour {
 		}
 
 		//get input:
-		Vector3 moveAssignment = moveAss = ShipInputManager.instance.movement;
+		Vector3 moveAssignment = ShipInputManager.instance.movement;
 		float horizontal = ShipInputManager.instance.horizontalInput;
-		float vertical = moveAss.z;
+		float vertical = moveAssignment.z;
 
 		//set rotate speed:
+		/* rotation speed with rotate-acceleration:
 		if(horizontal != 0){
 			currentRotateSpeed += horizontal * accRotation;
 			float maxRotSpeed = 0.5f * maxRotationSpeed + maxRotationSpeed * (currentSpeed / (maxForwardSpeed * 2));
@@ -77,6 +78,8 @@ public class ShipController : MonoBehaviour {
 		if(Mathf.Abs(horizontal) < 0.15f){
 			currentRotateSpeed = ResetValueOverTime (currentRotateSpeed, maxRotationSpeed, rotDegenTime);
 		}
+		*/
+		currentRotateSpeed = maxRotationSpeed * horizontal;
 
 		//rotate:
 		Vector3 myEuler = rb.rotation.eulerAngles;
@@ -126,9 +129,11 @@ public class ShipController : MonoBehaviour {
 		if (magnitudeMultiplier < velocityThreshold)
 			return;
 
-		remainingStunDuration = Mathf.Min (stunDuration * magnitudeMultiplier, maxStunDuration);;
+		remainingStunDuration = Mathf.Min (stunMultiplier * magnitudeMultiplier, maxStunDuration);;
 		Vector3 bounceVel = bounceDir.normalized * bounceMultiplier * magnitudeMultiplier;
-		rb.velocity = Vector3.ClampMagnitude (bounceVel, maxBounceMagnitude);
+		float bounceMagnitude = Mathf.Clamp (bounceVel.magnitude, minBounceMagnitude, maxBounceMagnitude);
+		rb.velocity = bounceVel.normalized * bounceMagnitude;
+		Debug.Log (bounceMagnitude);
 
 		currentSpeed = 0f;
 		currentRotateSpeed = 0f;
