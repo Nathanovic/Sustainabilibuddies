@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-//handles the spawning of fish for this specific fish pool
 public class FishPool : MonoBehaviour {
 
 	private FishConfig config;
@@ -51,6 +50,7 @@ public class FishPool : MonoBehaviour {
 		spawnFishCounter = new Counter ();
 		spawnFishCounter.onCount += SpawnFishAfterTime;
 		spawnFishCounter.StartCounter (RespawnFishTime());
+		Debug.Log ("spawn fish after " + RespawnFishTime ().ToString ());
 	}
 
 	void SpawnFish(){
@@ -86,7 +86,7 @@ public class FishPool : MonoBehaviour {
 	}
 
 	float RespawnFishTime(){
-		return (minRespawnTime + extraRespawnTime / myFishes.Count) * currentFishRespawnRate;
+		return minRespawnTime + extraRespawnTime / myFishes.Count;
 	}
 
 	public List<Fish> GetNeighbors(Fish fish, float radius){
