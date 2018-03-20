@@ -7,7 +7,7 @@ public class UpgradeableStat : MonoBehaviour {
 
 	[SerializeField]private string defaultUpgradeName = "default";
 	private int currentUpgrade = 0;//QQQ
-	private ShipUpgradeable stat;
+	public ShipUpgradeable stat;
 	[SerializeField]private Upgrade[] upgrades;
 
 	private Text descriptionText;
