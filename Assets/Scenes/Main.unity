@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45012468, g: 0.5001672, b: 0.5754506, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012462, g: 0.5001667, b: 0.5754502, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultUpgradeName: Safe waters
-  stat: 3
+  stat: 0
   upgrades:
   - upgradeTitle: Trout Waters
     stat: 3
@@ -4527,6 +4527,94 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &715938641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 715938642}
+  - component: {fileID: 715938645}
+  - component: {fileID: 715938644}
+  - component: {fileID: 715938643}
+  m_Layer: 0
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &715938642
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715938641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0046, y: 0, z: 0.72}
+  m_LocalScale: {x: 1.4966031, y: 0.8602207, z: 1}
+  m_Children: []
+  m_Father: {fileID: 510335058}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715938643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715938641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f7a17f66ce21d418f3a801175ae27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vignetteMat: {fileID: 2100000, guid: 5e83069ee3435e042931c4f1c8e0ab37, type: 2}
+  maxAlpha: 0.3
+  fadeTime: 0.25
+  bounceMagnitudeMultiplier: 0.05
+  interactionScript: {fileID: 1076108850}
+--- !u!23 &715938644
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715938641}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 5e83069ee3435e042931c4f1c8e0ab37, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &715938645
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 715938641}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &716113930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4649,7 +4737,7 @@ MonoBehaviour:
   ecoScript: {fileID: 1076108849}
   interactionScript: {fileID: 1076108850}
   buyButton: {fileID: 1406388507}
-  infoPanelTransform: {fileID: 198493415}
+  infoPanelTransform: {fileID: 0}
   upgradeTitleText: {fileID: 563223221}
   costText: {fileID: 41079738}
   resultText: {fileID: 1310640789}
@@ -5142,7 +5230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultUpgradeName: Olde Draggy
-  stat: 1
+  stat: 0
   upgrades:
   - upgradeTitle: Mediocrity
     stat: 1
@@ -5504,7 +5592,7 @@ MonoBehaviour:
   fishesInNet: []
   fillRect: {fileID: 1076393554}
   myState: 1
-  canHandleNet: 1
+  canHandleNet: 0
   maxCatchFishInterval: 0.3
 --- !u!54 &790659829
 Rigidbody:
@@ -5918,7 +6006,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0000000037252903, z: 0}
-    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.0049999994}
+    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.005}
   m_DirtyAABB: 0
 --- !u!183 &860106940
 Cloth:
@@ -7730,11 +7818,11 @@ MonoBehaviour:
   rotSpeedRelation: 0.05
   rotationSpeedDegenFactor: 0.03
   velocityThreshold: 1
-  bounceMultiplier: 1.6
-  stunMultiplier: 0.17
-  maxStunDuration: 2
-  minBounceMagnitude: 8
-  maxBounceMagnitude: 13
+  bounceMultiplier: 1.3
+  stunMultiplier: 0.6
+  maxStunDuration: 1.2
+  minBounceMagnitude: 3
+  maxBounceMagnitude: 10
 --- !u!114 &1076108848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7779,7 +7867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d843ce46c59834bb1c04e1e9150447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sailSpeed: 9
+  sailSpeed: 6
   rotationSpeed: 8.2
   netSize: 10
 --- !u!1 &1076393552
@@ -8137,7 +8225,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1009256955}
   m_HandleRect: {fileID: 1009256954}
   m_Direction: 0
-  m_Value: 0.00000010995347
+  m_Value: 0
   m_Size: 0.5007421
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10138,7 +10226,7 @@ MonoBehaviour:
   endWarning: ' seconds left! Speed it up!'
   menuPanel: {fileID: 1104586579}
   levelInfoScript: {fileID: 1667002863}
-  finalBuild: 1
+  finalBuild: 0
   noBuildObject: {fileID: 698784692}
   mainGameDurationInSecs: 150
   fadeTextInDuration: 4.5

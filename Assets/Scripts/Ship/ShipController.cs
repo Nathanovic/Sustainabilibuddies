@@ -20,8 +20,6 @@ public class ShipController : MonoBehaviour {
 
 	[Range(0f,1f)]public float rotSpeedRelation = 0.5f;
 
-	public float rotationSpeedDegenFactor = 0.1f;
-
 	[Header("Bounce values:")]
 	public float velocityThreshold = 1f;
 	public float bounceMultiplier = 1f;
@@ -101,8 +99,6 @@ public class ShipController : MonoBehaviour {
 			currentSpeed = ResetValueOverTime (currentSpeed, maxForwardSpeed, speedDegenTime);
 		}
 
-		currentSpeed -= currentRotateSpeed * rotationSpeedDegenFactor;
-
 		//move:
 		rb.velocity = transform.forward * currentSpeed;
 	}
@@ -133,7 +129,6 @@ public class ShipController : MonoBehaviour {
 		Vector3 bounceVel = bounceDir.normalized * bounceMultiplier * magnitudeMultiplier;
 		float bounceMagnitude = Mathf.Clamp (bounceVel.magnitude, minBounceMagnitude, maxBounceMagnitude);
 		rb.velocity = bounceVel.normalized * bounceMagnitude;
-		Debug.Log (bounceMagnitude);
 
 		currentSpeed = 0f;
 		currentRotateSpeed = 0f;
