@@ -5,23 +5,17 @@ using UnityEngine.UI;
 //manages which upgrade of type 'stat' can still be done
 public class UpgradeableStat : MonoBehaviour {
 
-	private DockStore storeScript;
-
 	[SerializeField]private string defaultUpgradeName = "default";
 	private int currentUpgrade = 0;//QQQ
-	private ShipUpgradeable stat;
+	public ShipUpgradeable stat;
 	[SerializeField]private Upgrade[] upgrades;
 
 	private Text descriptionText;
-	private Button purchaseButton;
 
 	private void Start () {
 		for (int i = 0; i < upgrades.Length; i++) {
 			upgrades [i].stat = stat;
 		}
-
-		storeScript = transform.parent.GetComponent <DockStore> ();
-		purchaseButton = GetComponentInChildren<Button> ();
 	}
 
 	public Upgrade CurrentUpgrade(){
