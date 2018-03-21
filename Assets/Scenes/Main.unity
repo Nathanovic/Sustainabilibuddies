@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45012468, g: 0.5001672, b: 0.5754506, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012456, g: 0.50016665, b: 0.5754501, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1567,7 +1567,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultUpgradeName: Safe waters
-  stat: 3
   upgrades:
   - upgradeTitle: Trout Waters
     stat: 3
@@ -2968,6 +2967,92 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 439204700}
   m_Mesh: {fileID: 4300006, guid: 2177467cfbfc05f4f9a88400560644ac, type: 3}
+--- !u!1 &455093254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 455093255}
+  - component: {fileID: 455093258}
+  - component: {fileID: 455093257}
+  - component: {fileID: 455093256}
+  m_Layer: 0
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455093255
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 455093254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.00000041782, z: 4.86}
+  m_LocalScale: {x: 13.0083475, y: 6.2020235, z: 6.2020235}
+  m_Children: []
+  m_Father: {fileID: 510335058}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &455093256
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 455093254}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 4add993b6436def4baf682edf9936b97, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &455093257
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 455093254}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &455093258
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 455093254}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &473126116
 GameObject:
   m_ObjectHideFlags: 0
@@ -3200,6 +3285,11 @@ Prefab:
     - target: {fileID: 20080617141873910, guid: d356d6abb6a890d429fc43bae3fbe463,
         type: 2}
       propertyPath: m_BackGroundColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114242315000571010, guid: d356d6abb6a890d429fc43bae3fbe463,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
@@ -4015,6 +4105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 643151828}
   - component: {fileID: 643151829}
+  - component: {fileID: 643151830}
   m_Layer: 8
   m_Name: Colliders
   m_TagString: Untagged
@@ -4047,6 +4138,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 2, z: 13}
   m_Center: {x: 0, y: 0.84, z: 2.33}
+--- !u!114 &643151830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 643151827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189a70092f96ee14ca60ab7c71b7bea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &649652209
 GameObject:
   m_ObjectHideFlags: 0
@@ -4649,7 +4751,6 @@ MonoBehaviour:
   ecoScript: {fileID: 1076108849}
   interactionScript: {fileID: 1076108850}
   buyButton: {fileID: 1406388507}
-  infoPanelTransform: {fileID: 198493415}
   upgradeTitleText: {fileID: 563223221}
   costText: {fileID: 41079738}
   resultText: {fileID: 1310640789}
@@ -4987,7 +5088,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultUpgradeName: Old motor
-  stat: 0
   upgrades:
   - upgradeTitle: Car motor
     stat: 0
@@ -5142,7 +5242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultUpgradeName: Olde Draggy
-  stat: 1
   upgrades:
   - upgradeTitle: Mediocrity
     stat: 1
@@ -5504,7 +5603,6 @@ MonoBehaviour:
   fishesInNet: []
   fillRect: {fileID: 1076393554}
   myState: 1
-  canHandleNet: 1
   maxCatchFishInterval: 0.3
 --- !u!54 &790659829
 Rigidbody:
@@ -5918,7 +6016,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: -0.0000000037252903, z: 0}
-    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.0049999994}
+    m_Extent: {x: 0.0050002243, y: 0.004999999, z: 0.005}
   m_DirtyAABB: 0
 --- !u!183 &860106940
 Cloth:
@@ -7729,12 +7827,7 @@ MonoBehaviour:
   rotDegenTime: 0.35
   rotSpeedRelation: 0.05
   rotationSpeedDegenFactor: 0.03
-  velocityThreshold: 1
-  bounceMultiplier: 1.6
-  stunMultiplier: 0.17
-  maxStunDuration: 2
-  minBounceMagnitude: 8
-  maxBounceMagnitude: 13
+  moveAss: {x: 0, y: 0, z: 0}
 --- !u!114 &1076108848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7757,6 +7850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb34ad7cea7f944caf601a0fba13f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstPermit: {fileID: 0}
 --- !u!114 &1076108850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8137,8 +8231,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1009256955}
   m_HandleRect: {fileID: 1009256954}
   m_Direction: 0
-  m_Value: 0.00000010995347
-  m_Size: 0.5007421
+  m_Value: 0
+  m_Size: 0.500742
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -12,7 +12,7 @@ public class ScreenVignette_Script : MonoBehaviour {
     void Start () {
         VignetteQuad = GameObject.FindGameObjectWithTag("Vignette");
         Vignette = VignetteQuad.GetComponent<Renderer>().material;
-        Switch = false;
+        Switch = true;
 	}
 	
 	// Update is called once per frame
