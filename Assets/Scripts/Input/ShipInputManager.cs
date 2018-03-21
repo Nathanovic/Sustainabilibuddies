@@ -26,8 +26,6 @@ public class ShipInputManager : ManagedBehaviour {
 	public bool doubleTapped{ get; private set;}
 	public Vector2 inputPosition{ get; private set;}
 
-	private bool boatControlsEnabled = true;
-
 	public Vector3 inputVec, moveVec;
 
 	public float horizontalInput{ get; private set;}
