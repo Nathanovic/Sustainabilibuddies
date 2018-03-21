@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: fb6566c21f717904f83743a5a76dd0b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: eca15f0e2e09447428bc99a395bfbc79, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CubeTex:
@@ -58,12 +58,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _normalmap:
+        m_Texture: {fileID: 2800000, guid: 68ef18d22f71a984698cc6c408a9f5d4, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _normalmap_copy:
+        m_Texture: {fileID: 2800000, guid: 68ef18d22f71a984698cc6c408a9f5d4, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FresnelScale: 0.3897143
-    - _GerstnerIntensity: 1
+    - _Cutoff: 0.5
+    - _FresnelScale: 0.86
+    - _GerstnerIntensity: 3.01
+    - _Gloss: 2
     - _HeightDisplacement: 2.3370318
+    - _Metallic: 0
     - _NormalsDisplacement: 72.72728
-    - _Shininess: 349.13794
+    - _Opacity: 0.324
+    - _Shininess: 500
+    - _depthblend: 1
     m_Colors:
     - _AnimationDirection: {r: 2, g: 1, b: -1, a: 1}
     - _AnimationTiling: {r: 0.4, g: 0.39099997, b: 0.56, a: 0.7}
@@ -71,6 +84,7 @@ Material:
     - _BumpDirection: {r: 1, g: 30, b: 20, a: -20}
     - _BumpTiling: {r: 0.04, g: 0.04, b: 0.04, a: 0.08}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Depth: {r: 0.8897059, g: 0.96805274, b: 1, a: 1}
     - _DepthColor: {r: 0.29811764, g: 0.36611718, b: 0.39552242, a: 0.34509805}
     - _DistortParams: {r: 1.0285715, g: 0.20187221, b: 2.766625, a: -0.41714284}
     - _Foam: {r: 0.3275862, g: 0.7471264, b: 0, a: 0}

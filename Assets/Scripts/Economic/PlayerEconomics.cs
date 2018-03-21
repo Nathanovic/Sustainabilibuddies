@@ -4,7 +4,12 @@ using UnityEngine.UI;
 public class PlayerEconomics : MonoBehaviour {
 
 	private ShipStats statScript;
+
 	public IntValueHolder fishValueHolder;
+
+	private ShipController boatScript;
+
+	public Permit firstPermit;
 
 	void Awake(){
 		fishValueHolder = new IntValueHolder ();		
@@ -13,6 +18,7 @@ public class PlayerEconomics : MonoBehaviour {
 	void Start(){
 		statScript = GetComponent<ShipStats> ();
 		FishingNet fishingScript = GetComponentInChildren<FishingNet> ();
+		boatScript = GetComponent<ShipController> ();
 
 		fishingScript.onNetUp += AddFish;
 	}
@@ -32,7 +38,6 @@ public class PlayerEconomics : MonoBehaviour {
 
 		if (SufficientFishCount (upgradeCost)) {
 			UseFishForUpgrade (upgradeCost);
-			Debug.Log ("try buy: " + upgrade.stat.ToString ());
 			if (upgrade.stat != ShipUpgradeable.permit) {
 				statScript.UpgradeStat (upgrade);
 			}
@@ -48,7 +53,6 @@ public class PlayerEconomics : MonoBehaviour {
 	}
 
 	private void BuyPermit(Permit permit){
-		Debug.Log ("buy permit! " + permit.name);
 		permit.Unlock ();
 		ProgressionManager.instance.AddPermit (permit);
 	}

@@ -14,8 +14,6 @@ public class DockStore : MonoBehaviour {
 	[SerializeField]private PlayerEconomics ecoScript;
 	[SerializeField]private ShipInteractions interactionScript;
 	[SerializeField]private Button buyButton;
-	[Header("Selected Info Panel:")]
-	[SerializeField]private RectTransform infoPanelTransform;
 	[SerializeField]private Text upgradeTitleText;
 	[SerializeField]private Text costText;
 	[SerializeField]private Text resultText;
@@ -49,9 +47,6 @@ public class DockStore : MonoBehaviour {
 	}
 
 	public void UpdateUpgradeInfo(UpgradeableStat upgradeScript){
-		infoPanelTransform.SetParent (upgradeScript.transform);
-		infoPanelTransform.anchoredPosition = Vector2.zero;
-
 		selectedUpgradeable = upgradeScript;
 		upgradeTitleText.text = upgradeScript.UpgradeTitle ();
 		currentStatText.text = "Current: " + upgradeScript.CurrentUpgradeName ();

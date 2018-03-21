@@ -10,7 +10,7 @@ public class VirtualJoystick : MonoBehaviour {
 	private CanvasCounter disableCounter;
 	[SerializeField]private float cvgDisableTime = 0.8f;
 	[SerializeField]private float fadeOutTime = 0.5f;
-	//private bool disabledCVG;
+	private bool disabledCVG;
 
 	private Vector3 inputVector;
 	public Vector3 movementVector;
@@ -114,7 +114,7 @@ public class VirtualJoystick : MonoBehaviour {
 
 	private void DisableCVG(){
 		disableCounter.StopCounter ();
-		//disabledCVG = true;
+		disabledCVG = true;
 		cvg.Deactivate ();
 	}
 
